@@ -2,9 +2,12 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](https://www.cs.helsinki.fi)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki sovellukseen](http://lpaatela.users.cs.helsinki.fi/tsoha)
+* [Linkki dokumentaatioon](docs/dokumentaatio.pdf)
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Pokemon-kanta.html) 
+Yhteydenpitoalusta, jossa käyttäjät voivat julkaista lyhyitä julkaisuja toisilleen. Käyttäjät
+voivat lukea toistensa julkaisuja, kommentoida niitä ja osoittaa pitävänsä kyseisestä julkaisusta.
+Kaikille näytettävien julkaisujen lisäksi järjestelmään voi luoda ryhmiä (suljettuja tai avoimia),
+jossa voi keskustella pienemmällä porukalla vaikkapa tietystä aiheesta.
