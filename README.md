@@ -3,7 +3,7 @@
 Yleisiä linkkejä:
 
 * [Linkki sovellukseen](http://lpaatela.users.cs.helsinki.fi/tsoha)
-* [Linkki dokumentaatioon](docs/dokumentaatio.pdf)
+* [Linkki dokumentaatioon](doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
