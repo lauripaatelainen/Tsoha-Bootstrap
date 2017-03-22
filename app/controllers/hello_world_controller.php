@@ -40,7 +40,7 @@
     }
     
     public static function edit_user() {
-        View::make('suunnitelmat/group_members.html');
+        View::make('suunnitelmat/edit_user.html');
     }
     
     public static function search_groups() {
