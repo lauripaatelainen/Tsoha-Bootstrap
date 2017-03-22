@@ -3,8 +3,7 @@
   class HelloWorldController extends BaseController{
 
     public static function index(){
-      // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
-   	echo 'Tämä on etusivu';
+        HelloWorldController::main();
     }
 
     public static function sandbox(){
@@ -26,5 +25,25 @@
     
     public static function create_group() {
         View::make('suunnitelmat/create_group.html');
+    }
+    
+    public static function show_group() {
+        View::make('suunnitelmat/show_group.html');
+    }
+    
+    public static function edit_group() {
+        View::make('suunnitelmat/edit_group.html');
+    }
+    
+    public static function group_members() {
+        View::make('suunnitelmat/group_members.html');
+    }
+    
+    public static function edit_user() {
+        View::make('suunnitelmat/group_members.html');
+    }
+    
+    public static function search_groups() {
+        View::make('suunnitelmat/search_groups.html');
     }
   }

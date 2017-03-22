@@ -1,0 +1,17 @@
+{% extends "base2.html" %}
+{% block content %}
+<h1>Lorem ipsum ryhmä</h1>
+<div id='group-description'>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut placerat nibh. Sed quis lorem in dui viverra convallis vel quis urna. Vivamus pulvinar at enim id bibendum. Nunc in semper sapien. Nulla ut elit bibendum, malesuada orci eget, ornare sem. Proin ut lorem neque. Morbi accumsan nisl nec nibh imperdiet hendrerit. Nunc egestas eleifend dolor, nec aliquam est consectetur sit amet.
+</div>
+<br/>
+<div id='group-actions'>
+    <button class="btn btn-primary">9 jäsentä</button>
+    <button class="btn btn-default">Muokkaa ryhmää</button>
+</div>
+
+<h3>Uusimmat julkaisut</h3>
+
+{% include 'suunnitelmat/mallijulkaisut.html' %}
+e
+{% endblock %}

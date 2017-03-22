@@ -1,39 +1,17 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% block content %}
-  <h1>Etusivu</h1>
+<h1>Etusivu</h1>
 
-  <form>
+<form>
     <div class="form-group">
-      <label>Tee julkaisu</label>
-      <textarea class="form-control"></textarea>
+        <label>Tee julkaisu</label>
+        <textarea class="form-control"></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary">Julkaise</button>
-  </form>
-  
-  <h3>Uusimmat julkaisut</h2>
-  
-  <div class="posts-list">
-      <div class="post">
-          <div class="post-user">Pekka</div>
-          <div class="post-timestamp">8.3.2017 klo 8:07</div>
-          <div class="post-content">Hyvää huomenta kaikille!</div>
-          <div class="post-info">8 tykkäystä</div>
-          <div class="post-actions">
-              <a href="#">Tykkää</a>
-              <a href="#">Kommentoi</a>
-          </div>
-      </div>
-      
-      <div class="post">
-          <div class="post-user">Teppo</div>
-          <div class="post-timestamp">2.3.2017 klo 8:07</div>
-          <div class="post-content">Hyvää huomenta kaikille!</div>
-          <div class="post-info">11 tykkäystä</div>
-          <div class="post-actions">
-              <a href="#">Älä tykkää</a>
-              <a href="#">Kommentoi</a>
-          </div>
-      </div>
-  </div>
+</form>
+
+<h3>Uusimmat julkaisut</h2>
+
+{% include 'suunnitelmat/mallijulkaisut.html' %}
 {% endblock %}

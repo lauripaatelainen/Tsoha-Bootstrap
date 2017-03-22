@@ -23,3 +23,28 @@ $routes->get('/register', function() {
 $routes->get('/create_group', function() {
     HelloWorldController::create_group();
 });
+
+$routes->get('/group', function() {
+    HelloWorldController::search_groups();
+});
+
+$routes->get('/group/1', function() {
+    HelloWorldController::show_group();
+});
+
+$routes->get('/group/1/edit', function() {
+    HelloWorldController::edit_group();
+});
+
+$routes->get('/group/1/members', function() {
+    HelloWorldController::group_members();
+});
+
+$routes->get('/user/1', function() {
+    HelloWorldController::show_user();
+});
+
+$routes->get('/user/1/edit', function() {
+    HelloWorldController::edit_user();
+});
+

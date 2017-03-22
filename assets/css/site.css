@@ -4,18 +4,29 @@
   margin: 0px auto;
 }
 
+#left-panel {
+  float: left;
+  width: 20%;
+  padding-left: 3em;
+}
+
 .navbar .container-fluid{
   max-width: 1200px;
   margin: 0px auto;
 }
 
 .post {
+    padding: 0.5em;
     margin-bottom: 1.2em;
+    border: 1px solid #BBCCFF;
+    border-radius: 0.8em;
+    background: #FEFFFF;
 }
 
 .post-user {
     display: inline;
     font-weight: bold;
+    font-size: 90%;
 }
 
 .post-timestamp::before {
@@ -24,23 +35,58 @@
 
 .post-timestamp {
     display: inline;
+    font-size: 90%;
+    color: #444;
 }
 
 .post-content {
     padding: 0.8em;
+    padding-bottom: 1.2em;
 }
 
 .post-info {
     display: inline;
     padding-right: 8px;
+    font-size: 90%;
 }
 
 .post-actions {
     display: inline;
+    font-size: 90%;
 }
 
 .post-actions a {
     border-left: 1px solid #888;
     padding-left: 8px;
     padding-right: 8px;
+}
+
+.comment {
+    padding: 0.2em;
+    margin-bottom: 0.4em;
+    margin-top: 0.4em;
+    border: 1px solid #DDEEFF;
+    border-radius: 0.8em;
+    background: #FEFFFF;
+}
+
+.comment-user {
+    display: inline;
+    font-weight: bold;
+    font-size: 80%;
+}
+
+.comment-timestamp::before {
+    content: " - ";
+}
+
+.comment-timestamp {
+    display: inline;
+    font-size: 80%;
+    color: #444;
+}
+
+.comment-content {
+    padding: 0.4em;
+    font-size: 90%;
 }
