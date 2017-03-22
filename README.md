@@ -7,10 +7,15 @@ Yleisiä linkkejä:
 
 Linkit sivujen luonnoksiin:
 
-* [Etusivu](http://lpaatela.users.cs.helsinki.fi/tsoha/main)
-* [Sisäänkirjautuminen](http://lpaatela.users.cs.helsinki.fi/tsoha/login)
 * [Rekisteröinti](http://lpaatela.users.cs.helsinki.fi/tsoha/register)
+* [Sisäänkirjautuminen](http://lpaatela.users.cs.helsinki.fi/tsoha/login)
+* [Etusivu](http://lpaatela.users.cs.helsinki.fi/tsoha)
 * [Ryhmän luonti](http://lpaatela.users.cs.helsinki.fi/tsoha/create_group)
+* [Ryhmien listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group)
+* [Ryhmän näyttö](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1)
+* [Ryhmän muokkaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1/edit)
+* [Ryhmän jäsenten listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1/members)
+* [Käyttäjän muokkaus](http://lpaatela.users.cs.helsinki.fi/tsoha/user/1/edit)
 
 ## Työn aihe
 
