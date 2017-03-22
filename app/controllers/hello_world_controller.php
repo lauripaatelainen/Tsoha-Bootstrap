@@ -4,11 +4,27 @@
 
     public static function index(){
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
-   	  View::make('home.html');
+   	echo 'Tämä on etusivu';
     }
 
     public static function sandbox(){
       // Testaa koodiasi täällä
-      echo 'Hello World!';
+      View::make('helloworld.html');
+    }
+    
+    public static function login(){
+        View::make('suunnitelmat/login.html');
+    }
+    
+    public static function register() {
+        View::make('suunnitelmat/register.html');
+    }
+    
+    public static function main() {
+        View::make('suunnitelmat/main.html');
+    }
+    
+    public static function create_group() {
+        View::make('suunnitelmat/create_group.html');
     }
   }

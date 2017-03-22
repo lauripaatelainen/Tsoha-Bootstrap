@@ -8,3 +8,39 @@
   max-width: 1200px;
   margin: 0px auto;
 }
+
+.post {
+    margin-bottom: 1.2em;
+}
+
+.post-user {
+    display: inline;
+    font-weight: bold;
+}
+
+.post-timestamp::before {
+    content: " - ";
+}
+
+.post-timestamp {
+    display: inline;
+}
+
+.post-content {
+    padding: 0.8em;
+}
+
+.post-info {
+    display: inline;
+    padding-right: 8px;
+}
+
+.post-actions {
+    display: inline;
+}
+
+.post-actions a {
+    border-left: 1px solid #888;
+    padding-left: 8px;
+    padding-right: 8px;
+}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Rekisteröidy</h1>
+
+  <form>
+    <div class="form-group">
+      <label>Käyttäjätunnus</label>
+      <input type="text" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Salasana</label>
+      <input type="password" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Vahvista salasana</label>
+      <input type="password" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Rekisteröidy</button>
+  </form>
+  
+  <div>
+      Onko sinulla jo tunnus? <a href="login">Kirjaudu sisään!</a>
+  </div>
+{% endblock %}
