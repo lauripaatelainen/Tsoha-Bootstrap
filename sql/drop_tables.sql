@@ -1,1 +1,8 @@
--- Lisää DROP TABLE lauseet tähän tiedostoon
+DROP TABLE IF EXISTS Kayttaja         CASCADE;
+DROP TABLE IF EXISTS Ryhma            CASCADE;
+DROP TABLE IF EXISTS Liittymispyynto  CASCADE;
+DROP TABLE IF EXISTS Kutsu            CASCADE;
+DROP TABLE IF EXISTS RyhmanJasenyys   CASCADE;
+DROP TABLE IF EXISTS Julkaisu         CASCADE;
+DROP TABLE IF EXISTS Tykkays          CASCADE;
+DROP TABLE IF EXISTS Kommentti        CASCADE;
