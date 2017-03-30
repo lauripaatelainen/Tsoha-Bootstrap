@@ -28,5 +28,3 @@ voivat lukea toistensa julkaisuja, kommentoida niitä ja osoittaa pitävänsä k
 Kaikille näytettävien julkaisujen lisäksi järjestelmään voi luoda ryhmiä (suljettuja tai avoimia),
 jossa voi keskustella pienemmällä porukalla vaikkapa tietystä aiheesta.
 
-## Linkkejä sivujen luonnoksiin
-
