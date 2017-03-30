@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Rekisteröidy</h1>
+  
+  {% if error_message %}
+  <div class="alert alert-danger">
+      {{ error_message }}
+  </div>
+  {% endif %}
+
+  <form action="{{base_path}}/register" method="post">
+    <div class="form-group">
+      <label>Käyttäjätunnus</label>
+      <input name="kayttajatunnus" type="text" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Salasana</label>
+      <input name="salasana1" type="password" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Vahvista salasana</label>
+      <input name="salasana2" type="password" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Rekisteröidy</button>
+  </form>
+  
+  <div>
+      Onko sinulla jo tunnus? <a href="{{base_path}}/login">Kirjaudu sisään!</a>
+  </div>
+{% endblock %}

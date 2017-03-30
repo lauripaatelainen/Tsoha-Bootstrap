@@ -16,10 +16,6 @@ $routes->get('/login', function() {
     HelloWorldController::login();
 });
 
-$routes->get('/register', function() {
-    HelloWorldController::register();
-});
-
 $routes->get('/create_group', function() {
     HelloWorldController::create_group();
 });
@@ -41,17 +37,25 @@ $routes->get('/group/1/members', function() {
 });
 
 $routes->get('/user', function() {
-    UserController::list_users();
+    KayttajaController::list_users();
 });
 
 $routes->get('/user/:id', function($id) {
-    UserController::show_user($id);
+    KayttajaController::show_user($id);
 });
 
 $routes->get('/user/:id/edit', function($id) {
-    UserController::edit_user($id);
+    KayttajaController::edit_user($id);
 });
 
 $routes->get('/user/:id/delete', function($id) {
-    UserController::delete_user($id);
+    KayttajaController::delete_user($id);
+});
+
+$routes->get('/register', function() {
+    KayttajaController::register();
+});
+
+$routes->post('/register', function() {
+    KayttajaController::handle_register();
 });
