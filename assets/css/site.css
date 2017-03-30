@@ -94,3 +94,7 @@
 .group-invitations-list li {
     padding: 0.5em;
 }
+
+.padded-list li {
+    padding: 0.4em;
+}

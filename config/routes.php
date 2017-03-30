@@ -25,7 +25,7 @@ $routes->get('/create_group', function() {
 });
 
 $routes->get('/group', function() {
-    HelloWorldController::search_groups();
+    HelloWorldController::list_groups();
 });
 
 $routes->get('/group/1', function() {
@@ -38,6 +38,10 @@ $routes->get('/group/1/edit', function() {
 
 $routes->get('/group/1/members', function() {
     HelloWorldController::group_members();
+});
+
+$routes->get('/user', function() {
+    UserController::list_users();
 });
 
 $routes->get('/user/1', function() {
