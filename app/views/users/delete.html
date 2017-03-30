@@ -1,0 +1,11 @@
+{% extends "base2.html" %}
+{% block content %}
+<center>
+    <h2>Haluatko varmasti poistaa käyttäjän {{user.kayttajatunnus}}?</h2>
+
+    <form>
+        <button type="submit" class="btn btn-danger">Poista käyttäjä</button>
+        <a href="{{base_path}}/user/{{user.id}}" class="btn btn-default">Peruuta</a>
+    </form>
+</center>
+{% endblock %}

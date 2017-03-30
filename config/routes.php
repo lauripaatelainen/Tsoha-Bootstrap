@@ -44,11 +44,14 @@ $routes->get('/user', function() {
     UserController::list_users();
 });
 
-$routes->get('/user/1', function() {
-    HelloWorldController::show_user();
+$routes->get('/user/:id', function($id) {
+    UserController::show_user($id);
 });
 
-$routes->get('/user/1/edit', function() {
-    HelloWorldController::edit_user();
+$routes->get('/user/:id/edit', function($id) {
+    UserController::edit_user($id);
 });
 
+$routes->get('/user/:id/delete', function($id) {
+    UserController::delete_user($id);
+});

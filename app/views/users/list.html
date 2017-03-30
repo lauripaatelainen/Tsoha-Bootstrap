@@ -13,9 +13,9 @@
     <tbody>
         {% for user in users %}
         <tr>
-            <td>{{user.kayttajatunnus}}</td>
+            <td><a href="{{base_path}}/user/{{user.id}}">{{user.kayttajatunnus}}</a></td>
             <td>{{user.yllapitaja}}</td>
-            <td><button class="btn btn-sm btn-primary">Muokkaa</button> <button class="btn btn-sm btn-danger">Poista</button></td>
+            <td><a href="{{base_path}}/user/{{user.id}}/edit" class="btn btn-sm btn-primary">Muokkaa</a> <a href="{{base_path}}/user/{{user.id}}/delete" class="btn btn-sm btn-danger">Poista</a></td>
         </tr>
         {% endfor %}
     </tbody>

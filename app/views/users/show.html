@@ -1,0 +1,12 @@
+{% extends "base2.html" %}
+{% block content %}
+<h1>Käyttäjä: {{user.kayttajatunnus}}</h1>
+<br/>
+<div id='user-actions'>
+    <a href="{{base_path}}/user/{{user.id}}/edit" class="btn btn-default">Muokkaa käyttäjää (vain adminit)</a>
+</div>
+
+<h3>Käyttäjän julkaisut</h3><!-- TODO -->
+
+{% include 'suunnitelmat/mallijulkaisut.html' %}
+{% endblock %}
