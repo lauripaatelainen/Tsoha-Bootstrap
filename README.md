@@ -18,7 +18,7 @@ Luonnokset:
 Toimivat sivut:
 * [Rekisteröinti](http://lpaatela.users.cs.helsinki.fi/tsoha/register)
 * [Käyttäjien listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/user)
-* [Käyttäjän muokkaus)(http://lpaatela.users.cs.helsinki.fi/tsoha/user/1/edit)
+* [Käyttäjän muokkaus](http://lpaatela.users.cs.helsinki.fi/tsoha/user/1/edit)
 * [Käyttäjän näyttö (postaukset luonnoksia)](http://lpaatela.users.cs.helsinki.fi/tsoha/user/1)
 
 ## Työn aihe
