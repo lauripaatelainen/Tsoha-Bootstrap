@@ -22,8 +22,8 @@ class KayttajaController extends BaseController {
         View::make('users/delete.html', array('user' => $user));
     }
 
-    public static function register($error_message = '', $kayttajatunnus = '') {
-        View::make('users/register.html', array('error_message' => $error_message, 'kayttajatunnus' => $kayttajatunnus));
+    public static function register() {
+        View::make('users/register.html');
     }
 
     public static function handle_register() {
@@ -32,33 +32,21 @@ class KayttajaController extends BaseController {
         $salasana2 = $_POST['salasana2'];
         
         try {
-
             if ($salasana1 != $salasana2) {
                 throw new Exception("Salasanat ei täsmää");
-            }
-
-            if ($salasana1 == '') {
+            } else if ($salasana1 == '') {
                 throw new Exception("Salasana on tyhjä");
-            }
-
-            if ($kayttajatunnus == '') {
+            } else if ($kayttajatunnus == '') {
                 throw new Exception("Käyttäjätunnus on tyhjä");
-            }
-
-            if (Kayttaja::haeKayttajatunnuksella($kayttajatunnus) != null) {
+            } else if (Kayttaja::haeKayttajatunnuksella($kayttajatunnus) != null) {
                 throw new Exception("Käyttäjätunnus '" . $kayttajatunnus . "' on varattu.");
             }
 
-            $kayttaja = new Kayttaja(array(
-                'kayttajatunnus' => $kayttajatunnus,
-                'salasana' => $salasana1
-            ));
-
+            $kayttaja = new Kayttaja(array('kayttajatunnus' => $kayttajatunnus, 'salasana' => $salasana1));
             $kayttaja->tallenna();
-            
             Redirect::to('/user/' . $kayttaja->id);
         } catch (Exception $e) {
-            KayttajaController::register($e->getMessage(), $kayttajatunnus);
+            Redirect::to('/register', array('error_message' => $e->getMessage(), 'kayttajatunnus' => $kayttajatunnus));
         }
     }
 
