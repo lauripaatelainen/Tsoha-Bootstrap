@@ -2,8 +2,8 @@
 {% block content %}
 <center>
     <h2>Haluatko varmasti poistaa käyttäjän {{user.kayttajatunnus}}?</h2>
-
-    <form>
+    <p>Myös kaikki käyttäjän julkaisut ja kommentit poistetaan</p>
+    <form method="post">
         <button type="submit" class="btn btn-danger">Poista käyttäjä</button>
         <a href="{{base_path}}/user/{{user.id}}" class="btn btn-default">Peruuta</a>
     </form>

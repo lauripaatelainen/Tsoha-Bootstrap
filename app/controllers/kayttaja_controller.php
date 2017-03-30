@@ -16,10 +16,48 @@ class KayttajaController extends BaseController {
         $user = Kayttaja::find($id);
         View::make('users/edit.html', array('user' => $user));
     }
+    
+    public static function handle_edit_user($id) {
+        try {
+            $kayttajatunnus = trim($_POST['kayttajatunnus']);
+            $salasana1 = $_POST['salasana1'];
+            $salasana2 = $_POST['salasana2'];
+            $yllapitaja = isset($_POST['yllapitaja']);
+            
+            if ($kayttajatunnus == '') {
+                throw new Excecption('Käyttäjätunnus on tyhjä');
+            } else if ($salasana1 != '' && $salasana1 != $salasana2) {
+                throw new Exception('Salasanat ei täsmää');
+            } else {
+                $toinen = Kayttaja::haeKayttajatunnuksella($kayttajatunnus);
+                if ($toinen != null && $toinen->id != $id) {
+                    throw new Exception("Käyttäjätunnus '" . $kayttajatunnus . "' on jo käytössä");
+                }
+            }
+            
+            $kayttaja = Kayttaja::find($id);
+            $kayttaja->kayttajatunnus = $kayttajatunnus;
+            if ($salasana1 != '') {
+                $kayttaja->salasana = $salasana1;
+            }
+            $kayttaja->yllapitaja = $yllapitaja;
+            $kayttaja->tallenna();
+            
+            Redirect::to('/user/' . $id . '/edit', array('message' => 'Käyttäjä tallennettu'));
+        } catch (Exception $ex) {
+            Redirect::to('/user/' . $id . '/edit', array('error_message' => $ex->getMessage()));
+        }
+    }
 
     public static function delete_user($id) {
         $user = Kayttaja::find($id);
         View::make('users/delete.html', array('user' => $user));
+    }
+    
+    public static function handle_delete_user($id) {
+        $kayttaja = Kayttaja::find($id);
+        $kayttaja->poista();
+        Redirect::to('/user', array('message' => "Käyttäjä '" . $kayttaja->kayttajatunnus . "' poistettu"));
     }
 
     public static function register() {
@@ -49,5 +87,4 @@ class KayttajaController extends BaseController {
             Redirect::to('/register', array('error_message' => $e->getMessage(), 'kayttajatunnus' => $kayttajatunnus));
         }
     }
-
 }

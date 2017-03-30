@@ -2,25 +2,27 @@
 {% block content %}
 <h1>Muokkaa käyttäjää</h1>
 
-<form>
+{% include 'messages.html' %}
+
+<form method="post">
     <div class="form-group">
         <label>Käyttäjätunnus</label>
-        <input type="text" class="form-control" value="{{user.kayttajatunnus}}">
+        <input name="kayttajatunnus" type="text" class="form-control" value="{{user.kayttajatunnus}}">
     </div>
 
     <div class="form-group">
         <label>Salasana</label>
-        <input type="password" class="form-control">
+        <input name="salasana1" type="password" class="form-control">
     </div>
 
     <div class="form-group">
         <label>Vahvista salasana</label>
-        <input type="password" class="form-control">
+        <input name="salasana2" type="password" class="form-control">
     </div>
 
     <div class="form-group">
         <label>On ylläpitäjä</label>
-        <input type="checkbox" class="form-control"{% if user.yllapitaja %} checked{% endif %}>
+        <input name="yllapitaja" type="checkbox" class="form-control"{% if user.yllapitaja %} checked{% endif %}>
     </div>
 
     <button type="submit" class="btn btn-primary">Tallenna</button>

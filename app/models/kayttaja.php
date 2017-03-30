@@ -1,6 +1,6 @@
 <?php
 class Kayttaja extends BaseModel {
-    public $id, $kayttajatunnus, $salasana, $yllapitaja = false;
+    public $id = null, $kayttajatunnus, $salasana, $yllapitaja = false;
     
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -59,13 +59,27 @@ class Kayttaja extends BaseModel {
     }
     
     public function tallenna() {
-        $kysely = DB::connection()->prepare('INSERT INTO Kayttaja(kayttajatunnus, salasana, yllapitaja) VALUES(:kayttajatunnus, :salasana, :yllapitaja) RETURNING id');
-        $kysely->execute(array(
-            'kayttajatunnus' => $this->kayttajatunnus,
-            'salasana' => $this->salasana,
-            'yllapitaja' => 'false'
-        ));
-        $row = $kysely->fetch();
-        $this->id = $row['id'];
+        if ($this->id == null) {
+            $kysely = DB::connection()->prepare('INSERT INTO Kayttaja(kayttajatunnus, salasana, yllapitaja) VALUES(:kayttajatunnus, :salasana, :yllapitaja) RETURNING id');
+            $kysely->bindValue(':kayttajatunnus', $this->kayttajatunnus);
+            $kysely->bindValue(':salasana', $this->salasana);
+            $kysely->bindValue(':yllapitaja', $this->yllapitaja, PDO::PARAM_BOOL);
+            $kysely->execute();
+            
+            $row = $kysely->fetch();
+            $this->id = $row['id'];
+        } else {
+            $kysely = DB::connection()->prepare('UPDATE Kayttaja SET kayttajatunnus = :kayttajatunnus, salasana = :salasana, yllapitaja = :yllapitaja WHERE id = :id');
+            $kysely->bindValue(':id', $this->id);
+            $kysely->bindValue(':kayttajatunnus', $this->kayttajatunnus);
+            $kysely->bindValue(':salasana', $this->salasana);
+            $kysely->bindValue(':yllapitaja', $this->yllapitaja, PDO::PARAM_BOOL);
+            $kysely->execute();
+        }
+    }
+    
+    public function poista() {
+        $kysely = DB::connection()->prepare('DELETE FROM Kayttaja WHERE id = :id');
+        $kysely->execute(array('id' => $this->id));
     }
 }

@@ -48,8 +48,16 @@ $routes->get('/user/:id/edit', function($id) {
     KayttajaController::edit_user($id);
 });
 
+$routes->post('/user/:id/edit', function($id) {
+    KayttajaController::handle_edit_user($id);
+});
+
 $routes->get('/user/:id/delete', function($id) {
     KayttajaController::delete_user($id);
+});
+
+$routes->post('/user/:id/delete', function($id) {
+    KayttajaController::handle_delete_user($id);
 });
 
 $routes->get('/register', function() {

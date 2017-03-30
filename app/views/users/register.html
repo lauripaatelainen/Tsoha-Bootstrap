@@ -2,16 +2,12 @@
 {% block content %}
   <h1>Rekisteröidy</h1>
   
-  {% if error_message %}
-  <div class="alert alert-danger">
-      {{ error_message }}
-  </div>
-  {% endif %}
+  {% include 'messages.html' %}
 
   <form action="{{base_path}}/register" method="post">
     <div class="form-group">
       <label>Käyttäjätunnus</label>
-      <input name="kayttajatunnus" type="text" class="form-control">
+      <input name="kayttajatunnus" type="text" class="form-control"{% if kayttajatunnus %} value="{{ kayttajatunnus }}"{% endif %}>
     </div>
 
     <div class="form-group">
