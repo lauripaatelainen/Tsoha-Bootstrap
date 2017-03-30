@@ -6,7 +6,7 @@ class Kayttaja extends BaseModel {
         parent::__construct($attributes);
     }
     
-    public static function all() {
+    public static function kaikki() {
         $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja');
         $kysely->execute();
         $rivit = $kysely->fetchAll();
@@ -24,7 +24,7 @@ class Kayttaja extends BaseModel {
         return $kayttajat;
     }
     
-    public static function find($id) {
+    public static function hae($id) {
         $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE id = :id LIMIT 1');
         $kysely->execute(array('id' => $id));
         $rivi = $kysely->fetch();

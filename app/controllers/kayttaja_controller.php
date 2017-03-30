@@ -3,18 +3,18 @@
 class KayttajaController extends BaseController {
 
     public static function list_users() {
-        $users = Kayttaja::all();
-        View::make('users/list.html', array('users' => $users));
+        $kayttajat = Kayttaja::kaikki();
+        View::make('users/list.html', array('users' => $kayttajat));
     }
 
     public static function show_user($id) {
-        $user = Kayttaja::find($id);
-        View::make('users/show.html', array('user' => $user));
+        $kayttaja = Kayttaja::hae($id);
+        View::make('users/show.html', array('user' => $kayttaja));
     }
 
     public static function edit_user($id) {
-        $user = Kayttaja::find($id);
-        View::make('users/edit.html', array('user' => $user));
+        $kayttaja = Kayttaja::hae($id);
+        View::make('users/edit.html', array('user' => $kayttaja));
     }
     
     public static function handle_edit_user($id) {
@@ -35,7 +35,7 @@ class KayttajaController extends BaseController {
                 }
             }
             
-            $kayttaja = Kayttaja::find($id);
+            $kayttaja = Kayttaja::hae($id);
             $kayttaja->kayttajatunnus = $kayttajatunnus;
             if ($salasana1 != '') {
                 $kayttaja->salasana = $salasana1;
@@ -50,12 +50,12 @@ class KayttajaController extends BaseController {
     }
 
     public static function delete_user($id) {
-        $user = Kayttaja::find($id);
-        View::make('users/delete.html', array('user' => $user));
+        $kayttaja = Kayttaja::hae($id);
+        View::make('users/delete.html', array('user' => $kayttaja));
     }
     
     public static function handle_delete_user($id) {
-        $kayttaja = Kayttaja::find($id);
+        $kayttaja = Kayttaja::hae($id);
         $kayttaja->poista();
         Redirect::to('/user', array('message' => "Käyttäjä '" . $kayttaja->kayttajatunnus . "' poistettu"));
     }

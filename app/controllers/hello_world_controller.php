@@ -6,8 +6,8 @@ class HelloWorldController extends BaseController {
     }
 
     public static function sandbox() {
-        $kayttajat = Kayttaja::all();
-        $kayttaja = Kayttaja::find(1);
+        $kayttajat = Kayttaja::kaikki();
+        $kayttaja = Kayttaja::hae(1);
 
         Kint::dump($kayttajat);
         Kint::dump($kayttaja);
