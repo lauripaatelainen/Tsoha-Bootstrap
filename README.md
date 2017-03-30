@@ -5,9 +5,8 @@ Yleisiä linkkejä:
 * [Linkki sovellukseen](http://lpaatela.users.cs.helsinki.fi/tsoha)
 * [Linkki dokumentaatioon](doc/dokumentaatio.pdf)
 
-Linkit sivujen luonnoksiin:
+Luonnokset:
 
-* [Rekisteröinti](http://lpaatela.users.cs.helsinki.fi/tsoha/register)
 * [Sisäänkirjautuminen](http://lpaatela.users.cs.helsinki.fi/tsoha/login)
 * [Etusivu](http://lpaatela.users.cs.helsinki.fi/tsoha)
 * [Ryhmän luonti](http://lpaatela.users.cs.helsinki.fi/tsoha/create_group)
@@ -15,7 +14,12 @@ Linkit sivujen luonnoksiin:
 * [Ryhmän näyttö](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1)
 * [Ryhmän muokkaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1/edit)
 * [Ryhmän jäsenten listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1/members)
-* [Käyttäjän muokkaus](http://lpaatela.users.cs.helsinki.fi/tsoha/user/1/edit)
+
+Toimivat sivut:
+* [Rekisteröinti](http://lpaatela.users.cs.helsinki.fi/tsoha/register)
+* [Käyttäjien listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/user)
+* [Käyttäjän muokkaus)(http://lpaatela.users.cs.helsinki.fi/tsoha/user/1/edit)
+* [Käyttäjän näyttö (postaukset luonnoksia)](http://lpaatela.users.cs.helsinki.fi/tsoha/user/1)
 
 ## Työn aihe
 
