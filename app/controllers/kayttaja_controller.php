@@ -24,28 +24,20 @@ class KayttajaController extends BaseController {
             $salasana2 = $_POST['salasana2'];
             $yllapitaja = isset($_POST['yllapitaja']);
             
-            if ($kayttajatunnus == '') {
-                throw new Excecption('Käyttäjätunnus on tyhjä');
-            } else if ($salasana1 != '' && $salasana1 != $salasana2) {
-                throw new Exception('Salasanat ei täsmää');
-            } else {
-                $toinen = Kayttaja::haeKayttajatunnuksella($kayttajatunnus);
-                if ($toinen != null && $toinen->id != $id) {
-                    throw new Exception("Käyttäjätunnus '" . $kayttajatunnus . "' on jo käytössä");
-                }
-            }
-            
             $kayttaja = Kayttaja::hae($id);
             $kayttaja->kayttajatunnus = $kayttajatunnus;
-            if ($salasana1 != '') {
-                $kayttaja->salasana = $salasana1;
+            if ($salasana1 != '') { /* salasana päivitetään vain jos se on syötetty lomakkeeseen */
+                $kayttaja->salasana1 = $salasana1;
+                $kayttaja->salasana2 = $salasana2;
             }
             $kayttaja->yllapitaja = $yllapitaja;
             $kayttaja->tallenna();
             
             Redirect::to('/user/' . $id . '/edit', array('message' => 'Käyttäjä tallennettu'));
+        } catch (ValidationException $ex) {
+            Redirect::to('/user/' . $id . '/edit', array('error_messages' => $ex->getErrors()));
         } catch (Exception $ex) {
-            Redirect::to('/user/' . $id . '/edit', array('error_message' => $ex->getMessage()));
+            Redirect::to('/user/' . $id . '/edit', array('error_messages' => array($ex->getMessage())));
         }
     }
 
@@ -70,21 +62,13 @@ class KayttajaController extends BaseController {
         $salasana2 = $_POST['salasana2'];
         
         try {
-            if ($salasana1 != $salasana2) {
-                throw new Exception("Salasanat ei täsmää");
-            } else if ($salasana1 == '') {
-                throw new Exception("Salasana on tyhjä");
-            } else if ($kayttajatunnus == '') {
-                throw new Exception("Käyttäjätunnus on tyhjä");
-            } else if (Kayttaja::haeKayttajatunnuksella($kayttajatunnus) != null) {
-                throw new Exception("Käyttäjätunnus '" . $kayttajatunnus . "' on varattu.");
-            }
-
-            $kayttaja = new Kayttaja(array('kayttajatunnus' => $kayttajatunnus, 'salasana' => $salasana1));
+            $kayttaja = new Kayttaja(array('kayttajatunnus' => $kayttajatunnus, 'salasana1' => $salasana1, 'salasana2' => $salasana2));
             $kayttaja->tallenna();
             Redirect::to('/user/' . $kayttaja->id);
-        } catch (Exception $e) {
-            Redirect::to('/register', array('error_message' => $e->getMessage(), 'kayttajatunnus' => $kayttajatunnus));
+        } catch (ValidationException $ex) {
+            Redirect::to('/register', array('error_messages' => $ex->getErrors(), 'kayttajatunnus' => $kayttajatunnus));
+        } catch (Exception $ex) {
+            Redirect::to('/register', array('error_messages' => array($ex->getMessage()), 'kayttajatunnus' => $kayttajatunnus));
         }
     }
 }

@@ -1,8 +1,8 @@
-{% if error_message %}
+{% for error_message in error_messages %}
 <div class="alert alert-danger">
     {{ error_message }}
 </div>
-{% endif %}
+{% endfor %}
 {% if message %}
 <div class="alert alert-success">
     {{ message }}

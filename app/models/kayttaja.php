@@ -1,9 +1,10 @@
 <?php
 class Kayttaja extends BaseModel {
-    public $id = null, $kayttajatunnus, $salasana, $yllapitaja = false;
+    public $id = null, $kayttajatunnus, $salasana1, $salasana2, $yllapitaja = false;
     
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('tarkista_kayttajatunnus', 'tarkista_salasana');
     }
     
     public static function kaikki() {
@@ -32,7 +33,8 @@ class Kayttaja extends BaseModel {
             $kayttaja = new Kayttaja(array(
                 'id' => $rivi['id'],
                 'kayttajatunnus' => $rivi['kayttajatunnus'],
-                'salasana' => $rivi['salasana'],
+                'salasana1' => $rivi['salasana'],
+                'salasana2' => $rivi['salasana'],
                 'yllapitaja' => $rivi['yllapitaja']
             ));
             return $kayttaja;
@@ -49,7 +51,8 @@ class Kayttaja extends BaseModel {
             $kayttaja = new Kayttaja(array(
                 'id' => $rivi['id'],
                 'kayttajatunnus' => $rivi['kayttajatunnus'],
-                'salasana' => $rivi['salasana'],
+                'salasana1' => $rivi['salasana'],
+                'salasana2' => $rivi['salasana'],
                 'yllapitaja' => $rivi['yllapitaja']
             ));
             return $kayttaja;
@@ -58,28 +61,58 @@ class Kayttaja extends BaseModel {
         }
     }
     
-    public function tallenna() {
-        if ($this->id == null) {
-            $kysely = DB::connection()->prepare('INSERT INTO Kayttaja(kayttajatunnus, salasana, yllapitaja) VALUES(:kayttajatunnus, :salasana, :yllapitaja) RETURNING id');
-            $kysely->bindValue(':kayttajatunnus', $this->kayttajatunnus);
-            $kysely->bindValue(':salasana', $this->salasana);
-            $kysely->bindValue(':yllapitaja', $this->yllapitaja, PDO::PARAM_BOOL);
-            $kysely->execute();
-            
-            $row = $kysely->fetch();
-            $this->id = $row['id'];
-        } else {
-            $kysely = DB::connection()->prepare('UPDATE Kayttaja SET kayttajatunnus = :kayttajatunnus, salasana = :salasana, yllapitaja = :yllapitaja WHERE id = :id');
-            $kysely->bindValue(':id', $this->id);
-            $kysely->bindValue(':kayttajatunnus', $this->kayttajatunnus);
-            $kysely->bindValue(':salasana', $this->salasana);
-            $kysely->bindValue(':yllapitaja', $this->yllapitaja, PDO::PARAM_BOOL);
-            $kysely->execute();
-        }
+    public function tallenna_uusi() {
+        $kysely = DB::connection()->prepare('INSERT INTO Kayttaja(kayttajatunnus, salasana, yllapitaja) VALUES(:kayttajatunnus, :salasana, :yllapitaja) RETURNING id');
+        $kysely->bindValue(':kayttajatunnus', $this->kayttajatunnus);
+        $kysely->bindValue(':salasana', $this->salasana1);
+        $kysely->bindValue(':yllapitaja', $this->yllapitaja, PDO::PARAM_BOOL);
+        $kysely->execute();
+
+        $row = $kysely->fetch();
+        $this->id = $row['id'];
+    }
+    
+    public function tallenna_vanha() {
+        $kysely = DB::connection()->prepare('UPDATE Kayttaja SET kayttajatunnus = :kayttajatunnus, salasana = :salasana, yllapitaja = :yllapitaja WHERE id = :id');
+        $kysely->bindValue(':id', $this->id);
+        $kysely->bindValue(':kayttajatunnus', $this->kayttajatunnus);
+        $kysely->bindValue(':salasana', $this->salasana1);
+        $kysely->bindValue(':yllapitaja', $this->yllapitaja, PDO::PARAM_BOOL);
+        $kysely->execute();
     }
     
     public function poista() {
         $kysely = DB::connection()->prepare('DELETE FROM Kayttaja WHERE id = :id');
         $kysely->execute(array('id' => $this->id));
+    }
+    
+    public function tarkista_kayttajatunnus() {
+        $errors = array();
+        
+        if ($this->kayttajatunnus == '') {
+            array_push($errors, 'Käyttäjätunnus ei saa olla tyhjä');
+        }
+        
+        // Tarkistetaan onko käyttäjätunnus käytössä toisella käyttäjällä
+        $toinen = Kayttaja::haeKayttajatunnuksella($this->kayttajatunnus);
+        if ($toinen != null && $toinen->id != $this->id) {
+            array_push($errors, 'Käyttäjätunnus on käytössä toisella käyttäjällä');
+        }
+        
+        return $errors;
+    }
+    
+    public function tarkista_salasana() {
+        $errors = array();
+        
+        if ($this->salasana1 == '') {
+            array_push($errors, 'Salasana ei saa olla tyhjä');
+        }
+        
+        if ($this->salasana1 != $this->salasana2) {
+            array_push($errors, 'Salasanat ei täsmää');
+        }
+        
+        return $errors;
     }
 }
