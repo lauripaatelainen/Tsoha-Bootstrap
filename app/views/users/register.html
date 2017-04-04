@@ -7,7 +7,7 @@
   <form action="{{base_path}}/register" method="post">
     <div class="form-group">
       <label>Käyttäjätunnus</label>
-      <input name="kayttajatunnus" type="text" class="form-control"{% if kayttajatunnus %} value="{{ kayttajatunnus }}"{% endif %}>
+      <input name="kayttajatunnus" type="text" class="form-control"{% if kayttajatunnus %} value="{{kayttajatunnus}}"{% endif %}>
     </div>
 
     <div class="form-group">

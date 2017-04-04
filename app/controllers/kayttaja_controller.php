@@ -100,4 +100,9 @@ class KayttajaController extends BaseController {
             Redirect::to('/login', array('error_messages' => array('Käyttäjätunnus tai salasana väärin'), 'kayttajatunnus' => $kayttajatunnus));
         }
     }
+    
+    public static function handle_logout() {
+        unset($_SESSION['user']);
+        Redirect::to('/login', array('message' => 'Sinut on kirjattu ulos'));
+    }
 }

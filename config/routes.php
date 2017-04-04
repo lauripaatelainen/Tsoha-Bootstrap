@@ -20,6 +20,10 @@ $routes->post('/login', function() {
     KayttajaController::handle_login();
 });
 
+$routes->post('/logout', function() {
+    KayttajaController::handle_logout();
+});
+
 $routes->get('/create_group', function() {
     HelloWorldController::create_group();
 });
