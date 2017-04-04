@@ -22,7 +22,8 @@ class HelloWorldController extends BaseController {
     }
 
     public static function main() {
-        View::make('suunnitelmat/main.html');
+        self::check_logged_in();
+        View::make('suunnitelmat/main.html', array("user" => self::get_user_logged_in(), "knimi" => self::get_user_logged_in()->kayttajatunnus));
     }
 
     public static function create_group() {

@@ -1,17 +1,19 @@
 <?php
+
 class Kayttaja extends BaseModel {
+
     public $id = null, $kayttajatunnus, $salasana1, $salasana2, $yllapitaja = false;
-    
+
     public function __construct($attributes) {
         parent::__construct($attributes);
         $this->validators = array('tarkista_kayttajatunnus', 'tarkista_salasana');
     }
-    
+
     public static function kaikki() {
         $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja');
         $kysely->execute();
         $rivit = $kysely->fetchAll();
-        
+
         $kayttajat = array();
         foreach ($rivit as $rivi) {
             $kayttajat[] = new Kayttaja(array(
@@ -21,10 +23,10 @@ class Kayttaja extends BaseModel {
                 'yllapitaja' => $rivi['yllapitaja']
             ));
         }
-        
+
         return $kayttajat;
     }
-    
+
     public static function hae($id) {
         $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE id = :id LIMIT 1');
         $kysely->execute(array('id' => $id));
@@ -42,7 +44,7 @@ class Kayttaja extends BaseModel {
             return null;
         }
     }
-    
+
     public static function haeKayttajatunnuksella($kayttajatunnus) {
         $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE kayttajatunnus = :kayttajatunnus LIMIT 1');
         $kysely->execute(array('kayttajatunnus' => $kayttajatunnus));
@@ -60,7 +62,16 @@ class Kayttaja extends BaseModel {
             return null;
         }
     }
-    
+
+    public static function autentikoi($kayttajatunnus, $salasana) {
+        $kayttaja = Kayttaja::haeKayttajatunnuksella($kayttajatunnus);
+        if ($kayttaja != null && $kayttaja->salasana1 == $salasana) {
+            return $kayttaja;
+        }
+
+        return null;
+    }
+
     public function tallenna_uusi() {
         $kysely = DB::connection()->prepare('INSERT INTO Kayttaja(kayttajatunnus, salasana, yllapitaja) VALUES(:kayttajatunnus, :salasana, :yllapitaja) RETURNING id');
         $kysely->bindValue(':kayttajatunnus', $this->kayttajatunnus);
@@ -71,7 +82,7 @@ class Kayttaja extends BaseModel {
         $row = $kysely->fetch();
         $this->id = $row['id'];
     }
-    
+
     public function tallenna_vanha() {
         $kysely = DB::connection()->prepare('UPDATE Kayttaja SET kayttajatunnus = :kayttajatunnus, salasana = :salasana, yllapitaja = :yllapitaja WHERE id = :id');
         $kysely->bindValue(':id', $this->id);
@@ -80,39 +91,40 @@ class Kayttaja extends BaseModel {
         $kysely->bindValue(':yllapitaja', $this->yllapitaja, PDO::PARAM_BOOL);
         $kysely->execute();
     }
-    
+
     public function poista() {
         $kysely = DB::connection()->prepare('DELETE FROM Kayttaja WHERE id = :id');
         $kysely->execute(array('id' => $this->id));
     }
-    
+
     public function tarkista_kayttajatunnus() {
         $errors = array();
-        
+
         if ($this->kayttajatunnus == '') {
             array_push($errors, 'Käyttäjätunnus ei saa olla tyhjä');
         }
-        
+
         // Tarkistetaan onko käyttäjätunnus käytössä toisella käyttäjällä
         $toinen = Kayttaja::haeKayttajatunnuksella($this->kayttajatunnus);
         if ($toinen != null && $toinen->id != $this->id) {
             array_push($errors, 'Käyttäjätunnus on käytössä toisella käyttäjällä');
         }
-        
+
         return $errors;
     }
-    
+
     public function tarkista_salasana() {
         $errors = array();
-        
+
         if ($this->salasana1 == '') {
             array_push($errors, 'Salasana ei saa olla tyhjä');
         }
-        
+
         if ($this->salasana1 != $this->salasana2) {
             array_push($errors, 'Salasanat ei täsmää');
         }
-        
+
         return $errors;
     }
+
 }

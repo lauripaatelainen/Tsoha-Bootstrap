@@ -13,7 +13,11 @@ $routes->get('/main', function() {
 });
 
 $routes->get('/login', function() {
-    HelloWorldController::login();
+    KayttajaController::login();
+});
+
+$routes->post('/login', function() {
+    KayttajaController::handle_login();
 });
 
 $routes->get('/create_group', function() {
