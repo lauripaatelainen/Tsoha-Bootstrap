@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Etusivu</h1>
+
+<form>
+    <div class="form-group">
+        <label>Tee julkaisu</label>
+        <textarea class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Julkaise</button>
+</form>
+
+<h3>Uusimmat julkaisut</h3>
+
+{% include 'suunnitelmat/mallijulkaisut.html' %}
+{% endblock %}

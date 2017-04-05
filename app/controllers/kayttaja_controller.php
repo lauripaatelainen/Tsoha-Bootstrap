@@ -39,7 +39,7 @@ class KayttajaController extends BaseController {
                 $kayttaja->salasana2 = $salasana2;
             }
             
-            if ($kayttaja->yllapitaja) {
+            if (self::get_user_logged_in()->yllapitaja) {
                 $kayttaja->yllapitaja = $yllapitaja;
             }
             
