@@ -2,7 +2,7 @@
 
 class Julkaisu extends BaseModel {
 
-    public $id = null, $kayttaja, $ryhma = null, $teksti, $aika;
+    public $id = null, $kayttaja, $ryhma = null, $teksti, $aika, $tykkaykset = array(), $kommentit = array();
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -12,12 +12,16 @@ class Julkaisu extends BaseModel {
     private static function lue_rivi($rivi) {
         $kayttaja = Kayttaja::hae($rivi['kayttaja']);
         $ryhma = null; /* Ryhma::hae($rivi['ryhma']); */
-        $julkaisut[] = new Julkaisu(array(
+        $tykkaykset = array(); /* Tykkays::haeJulkaisulla($rivi['id']) */
+        $kommentit = array(); /* Kommentti::haeJulkaisulla($rivi['id']) */
+        return new Julkaisu(array(
             'id' => $rivi['id'],
             'kayttaja' => $kayttaja,
             'ryhma' => $ryhma,
             'teksti' => $rivi['teksti'],
-            'aika' => $rivi['aika']
+            'aika' => $rivi['aika'],
+            'tykkaykset' => $tykkaykset,
+            'kommentit' => $kommentit
         ));
     }
 

@@ -13,5 +13,22 @@
 
 <h3>Uusimmat julkaisut</h3>
 
-{% include 'suunnitelmat/mallijulkaisut.html' %}
+<div class="posts-list">
+    {% for julkaisu in julkaisut %}
+    <div class="post">
+        <div class="post-user">{{julkaisu.kayttaja.kayttajatunnus}}</div>
+        <div class="post-timestamp">{{julkaisu.aika}}</div>
+        <div class="post-content">{{julkaisu.teksti}}</div>
+        <div class="post-info">{{julkaisu.tykkaykset|length}} tykkäystä</div>
+        <div class="post-actions">
+            {% if user_logged_in.id in julkaisu.tykkaykset|keys %}
+            <a href="#">Älä tykkää</a>
+            {% else %}
+            <a href="#">Tykkää</a>
+            {% endif %}
+        </div>
+        {% include 'suunnitelmat/mallikommentit.html' %}
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
