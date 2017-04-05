@@ -20,10 +20,12 @@
         <input name="salasana2" type="password" class="form-control">
     </div>
 
+    {% if user_logged_in.yllapitaja %}
     <div class="form-group">
         <label>On ylläpitäjä</label>
         <input name="yllapitaja" type="checkbox" class="form-control"{% if user.yllapitaja %} checked{% endif %}>
     </div>
+    {% endif %}
 
     <button type="submit" class="btn btn-primary">Tallenna</button>
 

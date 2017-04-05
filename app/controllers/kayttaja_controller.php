@@ -38,7 +38,11 @@ class KayttajaController extends BaseController {
                 $kayttaja->salasana1 = $salasana1;
                 $kayttaja->salasana2 = $salasana2;
             }
-            $kayttaja->yllapitaja = $yllapitaja;
+            
+            if ($kayttaja->yllapitaja) {
+                $kayttaja->yllapitaja = $yllapitaja;
+            }
+            
             $kayttaja->tallenna();
             
             Redirect::to('/user/' . $id . '/edit', array('message' => 'Käyttäjä tallennettu'));
