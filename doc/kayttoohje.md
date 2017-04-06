@@ -20,4 +20,4 @@ Sovelluksen kaikki osa-alueet ei vielä toimi (esim. vasemman reunan sisältö o
 Etusivulta onnistuu julkaisujen teko, kommentointi ja tykkäys. Käyttäjän nimeä klikkaamalla pääsee käyttäjän julkaisuihin, josta
 ylläpitäjät voivat myös siirtyä muokkaamaan käyttäjää. 
 
-Suuri osa toiminnoista on vielä saatavilla vain [README:ssa](README.md) olevien linkkien kautta. Toimintoja kannattaa testata kirjautumalla ensin ylläpitäjänä sisään, ja siirtymällä sivuille README:n linkkien kautta. 
+Suuri osa toiminnoista on vielä saatavilla vain [README:ssa](../README.md) olevien linkkien kautta. Toimintoja kannattaa testata kirjautumalla ensin ylläpitäjänä sisään, ja siirtymällä sivuille README:n linkkien kautta. 
