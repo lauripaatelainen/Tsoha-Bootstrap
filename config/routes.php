@@ -71,3 +71,7 @@ $routes->get('/register', function() {
 $routes->post('/register', function() {
     KayttajaController::handle_register();
 });
+
+$routes->post('/post/:id/comments', function($id) {
+    JulkaisuController::handle_post_comment($id);
+});

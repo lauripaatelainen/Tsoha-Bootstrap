@@ -13,7 +13,8 @@ class KayttajaController extends BaseController {
         self::check_logged_in();
         
         $kayttaja = Kayttaja::hae($id);
-        View::make('users/show.html', array('user' => $kayttaja));
+        $julkaisut = Julkaisu::haeKayttajalla($kayttaja);
+        View::make('users/show.html', array('user' => $kayttaja, 'julkaisut' => $julkaisut));
     }
 
     public static function edit_user($id) {

@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% import "macros.html" as macros %}
 {% block content %}
 <h1>Käyttäjä: {{user.kayttajatunnus}}</h1>
 <br/>
 <div id='user-actions'>
-    <a href="{{base_path}}/user/{{user.id}}/edit" class="btn btn-default">Muokkaa käyttäjää (vain adminit)</a>
+    {% if user_logged_in.yllapitaja %}<a href="{{base_path}}/user/{{user.id}}/edit" class="btn btn-default">Muokkaa käyttäjää (vain adminit)</a>{% endif %}
 </div>
 
 <h3>Käyttäjän julkaisut</h3><!-- TODO -->
 
-{% include 'suunnitelmat/mallijulkaisut.html' %}
+{{ macros.post_list(base_path, julkaisut, '/user/' ~ user.id) }}
 {% endblock %}

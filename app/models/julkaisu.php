@@ -2,7 +2,7 @@
 
 class Julkaisu extends BaseModel {
 
-    public $id = null, $kayttaja, $ryhma = null, $teksti, $aika, $tykkaykset = array(), $kommentit = array();
+    public $id = null, $kayttaja, $ryhma = null, $teksti, $aika;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -12,21 +12,31 @@ class Julkaisu extends BaseModel {
     private static function lue_rivi($rivi) {
         $kayttaja = Kayttaja::hae($rivi['kayttaja']);
         $ryhma = null; /* Ryhma::hae($rivi['ryhma']); */
-        $tykkaykset = array(); /* Tykkays::haeJulkaisulla($rivi['id']) */
-        $kommentit = array(); /* Kommentti::haeJulkaisulla($rivi['id']) */
         return new Julkaisu(array(
             'id' => $rivi['id'],
             'kayttaja' => $kayttaja,
             'ryhma' => $ryhma,
             'teksti' => $rivi['teksti'],
-            'aika' => $rivi['aika'],
-            'tykkaykset' => $tykkaykset,
-            'kommentit' => $kommentit
+            'aika' => $rivi['aika']
         ));
     }
 
-    public static function kaikki() {
-        $kysely = DB::connection()->prepare('SELECT id, kayttaja, ryhma, teksti, aika FROM Julkaisu');
+    public static function kaikki_julkiset() {
+        $kysely = DB::connection()->prepare('SELECT id, kayttaja, ryhma, teksti, aika FROM Julkaisu WHERE ryhma is null ORDER BY aika DESC');
+        $kysely->execute();
+        $rivit = $kysely->fetchAll();
+
+        $julkaisut = array();
+        foreach ($rivit as $rivi) {
+            $julkaisut[] = self::lue_rivi($rivi);
+        }
+
+        return $julkaisut;
+    }
+
+    public static function haeKayttajalla($kayttaja) {
+        $kysely = DB::connection()->prepare('SELECT id, kayttaja, ryhma, teksti, aika FROM Julkaisu WHERE ryhma is null AND kayttaja = :kayttaja ORDER BY aika DESC');
+        $kysely->bindValue(':kayttaja', $kayttaja->id);
         $kysely->execute();
         $rivit = $kysely->fetchAll();
 
@@ -43,7 +53,7 @@ class Julkaisu extends BaseModel {
         $kysely->execute(array('id' => $id));
         $rivi = $kysely->fetch();
         if ($rivi) {
-            return lue_rivi($rivi);
+            return self::lue_rivi($rivi);
         } else {
             return null;
         }
@@ -82,5 +92,9 @@ class Julkaisu extends BaseModel {
     public function poista() {
         $kysely = DB::connection()->prepare('DELETE FROM Julkaisu WHERE id = :id');
         $kysely->execute(array('id' => $this->id));
+    }
+    
+    public function haeKommentit() {
+        return Kommentti::haeJulkaisulla($this);
     }
 }
