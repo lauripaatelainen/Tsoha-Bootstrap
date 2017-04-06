@@ -35,7 +35,7 @@ INSERT INTO Julkaisu(kayttaja, ryhma, teksti, aika) VALUES (3, 2, 'Miten menee?'
 INSERT INTO Kommentti(kayttaja, julkaisu, teksti, aika) VALUES (2, 1, 'Kiitos vaan ja samoin', '2017-03-20 8:09');
 INSERT INTO Kommentti(kayttaja, julkaisu, teksti, aika) VALUES (1, 1, 'Kiitos itsellesi', '2017-03-20 8:11');
 INSERT INTO Kommentti(kayttaja, julkaisu, teksti, aika) VALUES (3, 1, 'Olkaa hiljaa', '2017-03-20 8:15');
-INSERT INTO Kommentti(kayttaja, julkaisu, teksti, aika) VALUES (5, 1, 'Ihan paska aamu', '2017-03-20 8:19');
+INSERT INTO Kommentti(kayttaja, julkaisu, teksti, aika) VALUES (5, 1, 'Ihan huono aamu', '2017-03-20 8:19');
 INSERT INTO Kommentti(kayttaja, julkaisu, teksti, aika) VALUES (4, 2, 'moi', '2017-03-24 17:55');
 
 INSERT INTO Tykkays(kayttaja, julkaisu) VALUES (1, 1);
