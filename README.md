@@ -27,5 +27,5 @@ jossa voi keskustella pienemmällä porukalla vaikkapa tietystä aiheesta.
 * [Rekisteröinti](http://lpaatela.users.cs.helsinki.fi/tsoha/register)
 * [Käyttäjien listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/user)
 * [Käyttäjän muokkaus](http://lpaatela.users.cs.helsinki.fi/tsoha/user/1/edit)
-* [Käyttäjän näyttö (postaukset luonnoksia)](http://lpaatela.users.cs.helsinki.fi/tsoha/user/1)
+* [Käyttäjän näyttö](http://lpaatela.users.cs.helsinki.fi/tsoha/user/1)
 
