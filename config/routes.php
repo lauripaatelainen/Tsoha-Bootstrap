@@ -72,6 +72,10 @@ $routes->post('/register', function() {
     KayttajaController::handle_register();
 });
 
+$routes->post('/post', function() {
+    JulkaisuController::handle_post();
+});
+
 $routes->post('/post/:id/comments', function($id) {
     JulkaisuController::handle_post_comment($id);
 });

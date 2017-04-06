@@ -5,10 +5,10 @@
 
 {% include 'messages.html' %}
 
-<form>
+<form action="{{base_path}}/post" method="post">
     <div class="form-group">
         <label>Tee julkaisu</label>
-        <textarea class="form-control"></textarea>
+        <textarea name="teksti" class="form-control"></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary">Julkaise</button>
