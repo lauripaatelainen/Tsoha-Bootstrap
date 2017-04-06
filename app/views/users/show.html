@@ -9,5 +9,5 @@
 
 <h3>Käyttäjän julkaisut</h3><!-- TODO -->
 
-{{ macros.post_list(base_path, julkaisut, '/user/' ~ user.id) }}
+{{ macros.post_list(_context, julkaisut, '/user/' ~ user.id) }}
 {% endblock %}

@@ -6,7 +6,7 @@ class Julkaisu extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array();
+        $this->validators = array('tarkista_teksti');
     }
     
     private static function lue_rivi($rivi) {
@@ -96,5 +96,29 @@ class Julkaisu extends BaseModel {
     
     public function haeKommentit() {
         return Kommentti::haeJulkaisulla($this);
+    }
+    
+    /**
+     * Palauttaa listan id-listan käyttäjistä jotka tykkäävät julkaisusta
+     */
+    public function haeTykkaykset() {
+        $tykkaykset = array();
+        
+        $kysely = DB::connection()->prepare('SELECT kayttaja FROM Tykkays WHERE julkaisu = :julkaisu');
+        $kysely->bindValue(':julkaisu', $this->id);
+        $kysely->execute();
+        $rivit = $kysely->fetchAll();
+        foreach ($rivit as $rivi) {
+            $tykkaykset[] = $rivi['kayttaja'];
+        }
+        return $tykkaykset;
+    }
+    
+    public function tarkista_teksti() {
+        $errors = array();
+        if (trim($this->teksti) == '') {
+            array_push($errors, "Teksti on tyhjä");
+        }
+        return $errors;
     }
 }

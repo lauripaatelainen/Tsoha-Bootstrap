@@ -98,3 +98,12 @@
 .padded-list li {
     padding: 0.4em;
 }
+
+.link-like {
+    color: #245269;
+}
+
+.link-unlike {
+    color: #285e8e;
+    font-weight: bold;
+}

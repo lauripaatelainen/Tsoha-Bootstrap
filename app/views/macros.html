@@ -1,31 +1,31 @@
-{% macro user_link(base_path, user) %}<a href="{{base_path}}/user/{{user.id}}">{{user.kayttajatunnus}}</a>{% endmacro %}
+{% macro user_link(context, user) %}<a href="{{context.base_path}}/user/{{user.id}}">{{user.kayttajatunnus}}</a>{% endmacro %}
 
-{% macro post_list(base_path, posts, return_path) %}
+{% macro post_list(context, posts, return_path) %}
 {% import _self as macros %}
 <div class="posts-list">
     {% for julkaisu in posts %}
     <div class="post">
-        <div class="post-user">{{ macros.user_link(base_path, julkaisu.kayttaja) }}</div>
+        <div class="post-user">{{ macros.user_link(context, julkaisu.kayttaja) }}</div>
         <div class="post-timestamp">{{julkaisu.aika}}</div>
         <div class="post-content">{{julkaisu.teksti}}</div>
-        <div class="post-info">{{julkaisu.tykkaykset|length}} tykkäystä</div>
+        <div class="post-info">{{julkaisu.haeTykkaykset()|length}} tykkäystä</div>
         <div class="post-actions">
-            {% if user_logged_in.id in julkaisu.tykkaykset|keys %}
-            <a href="#">Älä tykkää</a>
+            {% if context.user_logged_in.id in julkaisu.haeTykkaykset() %}
+            <form style="display:inline;" action="{{context.base_path}}/post/{{julkaisu.id}}/unlike" method="post"><a href="#" class="link-unlike" onclick="$(this).closest('form').submit()">Älä tykkää</a></form>
             {% else %}
-            <a href="#">Tykkää</a>
+            <form style="display:inline;" action="{{context.base_path}}/post/{{julkaisu.id}}/like" method="post"><a href="#" class="link-like" onclick="$(this).closest('form').submit()">Tykkää</a></form>
             {% endif %}
         </div>
         <div class="post-comments">
             {% for kommentti in julkaisu.haeKommentit() %}
             <div class="comment">
-                <div class="comment-user">{{macros.user_link(base_path, kommentti.kayttaja)}}</div>
+                <div class="comment-user">{{macros.user_link(context, kommentti.kayttaja)}}</div>
                 <div class="comment-timestamp">{{kommentti.aika}}</div>
                 <div class="comment-content">{{kommentti.teksti}}</div>
             </div>
             {% endfor %}
             <div class="comment-form" style="width: 100%;">
-                <form action="{{base_path}}/post/{{julkaisu.id}}/comments" method="post" class="form-inline">
+                <form action="{{context.base_path}}/post/{{julkaisu.id}}/comments" method="post" class="form-inline">
                     <input name="return_path" type="hidden" value="{{return_path|default('/')}}" />
                     <label style="float: left;">Kommentoi: </label>
                     <button type="submit" class="btn btn-sm btn-primary" style="float: right;">Julkaise</button>

@@ -22,7 +22,7 @@ class JulkaisuController extends BaseController {
             $julkaisu->tallenna();
             Redirect::to($return_path, array('message' => 'Julkaistu'));
         } catch (ValidationException $ex) {
-            Redirect::to($return_path, array('error_messages' => $ex->getMessages()));
+            Redirect::to($return_path, array('error_messages' => $ex->getErrors()));
         } catch (Exception $ex) {
             Redirect::to($return_path, array('error_messages' => array($ex->getMessage())));
         }
@@ -49,7 +49,7 @@ class JulkaisuController extends BaseController {
             $kommentti->tallenna();
             Redirect::to($return_path, array('message' => 'Kommentti julkaistu'));
         } catch (ValidationException $ex) {
-            Redirect::to($return_path, array('error_messages' => $ex->getMessages()));
+            Redirect::to($return_path, array('error_messages' => $ex->getErrors()));
         } catch (Exception $ex) {
             Redirect::to($return_path, array('error_messages' => array($ex->getMessage())));
         }

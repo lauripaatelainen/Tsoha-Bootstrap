@@ -79,3 +79,11 @@ $routes->post('/post', function() {
 $routes->post('/post/:id/comments', function($id) {
     JulkaisuController::handle_post_comment($id);
 });
+
+$routes->post('/post/:id/like', function($id) {
+    JulkaisuController::handle_like($id);
+});
+
+$routes->post('/post/:id/unlike', function($id) {
+    JulkaisuController::handle_unlike($id);
+});
