@@ -4,16 +4,17 @@
 {% import _self as macros %}
 <div class="posts-list">
     {% for julkaisu in posts %}
-    <div class="post">
+    <div id="p{{julkaisu.id}}" class="post">
+        
         <div class="post-user">{{ macros.user_link(context, julkaisu.kayttaja) }}</div>
         <div class="post-timestamp">{{julkaisu.aika}}</div>
         <div class="post-content">{{julkaisu.teksti}}</div>
         <div class="post-info">{{julkaisu.haeTykkaykset()|length}} tykkäystä</div>
         <div class="post-actions">
             {% if context.user_logged_in.id in julkaisu.haeTykkaykset() %}
-            <form style="display:inline;" action="{{context.base_path}}/post/{{julkaisu.id}}/unlike" method="post"><a href="#" class="link-unlike" onclick="$(this).closest('form').submit()">Älä tykkää</a></form>
+            <form style="display:inline;" action="{{context.base_path}}/post/{{julkaisu.id}}/unlike" method="post"><input type="hidden" name="return_path" value="{{return_path}}#p{{julkaisu.id}}"/><a href="#" class="link-unlike" onclick="$(this).closest('form').submit()">Älä tykkää</a></form>
             {% else %}
-            <form style="display:inline;" action="{{context.base_path}}/post/{{julkaisu.id}}/like" method="post"><a href="#" class="link-like" onclick="$(this).closest('form').submit()">Tykkää</a></form>
+            <form style="display:inline;" action="{{context.base_path}}/post/{{julkaisu.id}}/like" method="post"><input type="hidden" name="return_path" value="{{return_path}}#p{{julkaisu.id}}"/><a href="#" class="link-like" onclick="$(this).closest('form').submit()">Tykkää</a></form>
             {% endif %}
         </div>
         <div class="post-comments">
@@ -26,7 +27,7 @@
             {% endfor %}
             <div class="comment-form" style="width: 100%;">
                 <form action="{{context.base_path}}/post/{{julkaisu.id}}/comments" method="post" class="form-inline">
-                    <input name="return_path" type="hidden" value="{{return_path|default('/')}}" />
+                    <input type="hidden" name="return_path" value="{{return_path}}#p{{julkaisu.id}}"/>
                     <label style="float: left;">Kommentoi: </label>
                     <button type="submit" class="btn btn-sm btn-primary" style="float: right;">Julkaise</button>
                     <div style="overflow: hidden; padding-left: 0.4em; padding-right: 0.4em;">

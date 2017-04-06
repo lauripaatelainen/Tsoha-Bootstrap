@@ -54,4 +54,44 @@ class JulkaisuController extends BaseController {
             Redirect::to($return_path, array('error_messages' => array($ex->getMessage())));
         }
     }
+    
+    public static function handle_like($post_id) {
+        self::check_logged_in();
+        $kayttaja = self::get_user_logged_in();
+        $julkaisu = Julkaisu::hae($post_id);
+        if (isset($_POST['return_path'])) {
+            $return_path = $_POST['return_path'];
+        } else {
+            $return_path = '/';
+        }
+        
+        try {
+            $julkaisu->lisaaTykkays($kayttaja);
+            Redirect::to($return_path, array('message' => 'Julkaisusta tykätty'));
+        } catch (ValidationException $ex) {
+            Redirect::to($return_path, array('error_messages' => $ex->getErrors()));
+        } catch (Exception $ex) {
+            Redirect::to($return_path, array('error_messages' => array($ex->getMessage())));
+        }
+    }
+    
+    public static function handle_unlike($post_id) {
+        self::check_logged_in();
+        $kayttaja = self::get_user_logged_in();
+        $julkaisu = Julkaisu::hae($post_id);
+        if (isset($_POST['return_path'])) {
+            $return_path = $_POST['return_path'];
+        } else {
+            $return_path = '/';
+        }
+        
+        try {
+            $julkaisu->poistaTykkays($kayttaja);
+            Redirect::to($return_path, array('message' => 'Tykkäys poistettu'));
+        } catch (ValidationException $ex) {
+            Redirect::to($return_path, array('error_messages' => $ex->getErrors()));
+        } catch (Exception $ex) {
+            Redirect::to($return_path, array('error_messages' => array($ex->getMessage())));
+        }
+    }
 }

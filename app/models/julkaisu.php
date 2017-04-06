@@ -121,4 +121,27 @@ class Julkaisu extends BaseModel {
         }
         return $errors;
     }
+    
+    public function lisaaTykkays($kayttaja) {
+        $kysely = DB::connection()->prepare('SELECT kayttaja FROM Tykkays WHERE julkaisu = :julkaisu AND kayttaja = :kayttaja');
+        $kysely->bindValue(':julkaisu', $this->id);
+        $kysely->bindValue(':kayttaja', $kayttaja->id);
+        $kysely->execute();
+        $rivi = $kysely->fetch();
+        if ($rivi) {
+            return;
+        }
+        
+        $kysely = DB::connection()->prepare('INSERT INTO Tykkays(kayttaja, julkaisu) VALUES(:kayttaja, :julkaisu)');
+        $kysely->bindValue(':julkaisu', $this->id);
+        $kysely->bindValue(':kayttaja', $kayttaja->id);
+        $kysely->execute();
+    }
+    
+    public function poistaTykkays($kayttaja) {
+        $kysely = DB::connection()->prepare('DELETE FROM Tykkays WHERE kayttaja = :kayttaja AND julkaisu = :julkaisu');
+        $kysely->bindValue(':julkaisu', $this->id);
+        $kysely->bindValue(':kayttaja', $kayttaja->id);
+        $kysely->execute();
+    }
 }
