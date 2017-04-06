@@ -11,6 +11,7 @@ jossa voi keskustella pienemmällä porukalla vaikkapa tietystä aiheesta.
 
 * [Linkki sovellukseen](http://lpaatela.users.cs.helsinki.fi/tsoha)
 * [Linkki dokumentaatioon](doc/dokumentaatio.pdf)
+* [Käynnistys-/käyttöohje](doc/kayttoohje.md)
 
 ## Luonnokset:
 
