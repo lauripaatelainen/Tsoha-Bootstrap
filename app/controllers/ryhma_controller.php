@@ -35,4 +35,16 @@ class RyhmaController extends BaseController {
             Redirect::to('/group/' . $id . '/members', array('error_messages' => array('Virhe: ' . $ex->getMessage())));
         }
     }
+    
+    public static function edit_group($id) {
+        self::check_logged_in();
+        $kayttaja = self::get_user_logged_in();
+        $ryhma = Ryhma::hae($id);
+        
+        if ($kayttaja->id != $ryhma->yllapitaja->id && !$kayttaja->yllapitaja) {
+            Redirect::to('/group/' . $id, array('error_messages' => array('Vain ryhmän ylläpitäjä voi muokata ryhmää')));
+        } else {
+            View::make('groups/edit.html', array('ryhma' => $ryhma));
+        }
+    }
 }

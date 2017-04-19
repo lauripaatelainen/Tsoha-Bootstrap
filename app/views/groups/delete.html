@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<center>
+    <h2>Haluatko varmasti poistaa ryhmän {{ryhma.nimi}}?</h2>
+    <p>Myös kaikki ryhmän julkaisut ja kommentit poistetaan</p>
+    
+    {% include "messages.html" %}
+    
+    <form method="post">
+        <button type="submit" class="btn btn-danger">Poista ryhmä</button>
+        <a href="{{base_path}}/group/{{ryhma.id}}" class="btn btn-default">Peruuta</a>
+    </form>
+</center>
+{% endblock %}

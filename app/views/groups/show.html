@@ -13,6 +13,8 @@
     Ryhmän ylläpitäjä: <a href="{{base_path}}/user/{{ryhma.yllapitaja.id}}">{{ryhma.yllapitaja.kayttajatunnus}}</a>
 </div>
 <br/>
+
+{% if user_logged_in.id in ryhma.haeJasenet()|ids %}
 <div id='group-actions'>
     <a href="{{base_path}}/group/{{ryhma.id}}/members" class="btn btn-primary">{{ryhma.haeJasenet()|length}} jäsentä</a>
     {% if ryhma.yllapitaja.id == user_logged_in.id %}
@@ -47,7 +49,6 @@
 </ul>
 {% endif %}
 
-{% if user_logged_in.id in ryhma.haeJasenet()|ids %}
 <h3>Uusimmat julkaisut</h3>
 
 {{ macros.post_list(_context, ryhma.haeJulkaisut(), '/group/' ~ ryhma.id) }}

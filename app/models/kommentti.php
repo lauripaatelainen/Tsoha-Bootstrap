@@ -6,7 +6,7 @@ class Kommentti extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array();
+        $this->validators = array('tarkista_teksti');
     }
     
     private static function lue_rivi($rivi) {
@@ -71,5 +71,13 @@ class Kommentti extends BaseModel {
     public function poista() {
         $kysely = DB::connection()->prepare('DELETE FROM Kommentti WHERE id = :id');
         $kysely->execute(array('id' => $this->id));
+    }
+    
+    public function tarkista_teksti() {
+        $errors = array();
+        if (trim($this->teksti) == '') {
+            array_push($errors, "Teksti on tyhjä");
+        }
+        return $errors;
     }
 }
