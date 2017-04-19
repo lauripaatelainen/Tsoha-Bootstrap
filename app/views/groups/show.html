@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+{% block content %}
+<h1>{{ryhma.nimi}}</h1>
+<div id='group-description'>
+    {{ryhma.kuvaus}}
+</div>
+<br/>
+<div>
+    Ryhmän ylläpitäjä: <a href="{{base_path}}/user/{{ryhma.yllapitaja.id}}">{{ryhma.yllapitaja.kayttajatunnus}}</a>
+</div>
+<br/>
+<div id='group-actions'>
+    <a href="{{base_path}}/group/{{ryhma.id}}/members" class="btn btn-primary">{{ryhma.haeJasenet()|length}} jäsentä</a>
+    {% if ryhma.yllapitaja.id == user_logged_in.id %}
+    <a href="{{base_path}}/group/{{ryhma.id}}/edit" class="btn btn-default">Muokkaa ryhmää</a>
+    {% endif %}
+</div>
+
+{% if ryhma.yllapitaja.id == user_logged_in.id %}
+<h3>Liittymispyynnöt</h3>
+
+<ul class="list-unstyled group-invitations-list">
+    <li>
+        <div>
+            <b>Matti</b>
+            <br/>
+            Saanko liittyä?
+            <br/>
+            <button class="btn btn-primary">Hyväksy</button>
+            <button class="btn btn-danger">Hylkää</button>
+        </div>
+    </li>
+    <li>
+        <div>
+            <b>Pekka</b>
+            <br/>
+            Olis kiva kuulua tähän ryhmään
+            <br/>
+            <button class="btn btn-primary">Liity</button>
+            <button class="btn btn-danger">Hylkää</button>
+        </div>
+    </li>
+</ul>
+{% endif %}
+
+<h3>Uusimmat julkaisut</h3>
+
+{{ macros.post_list(_context, ryhma.haeJulkaisut(), '/group/' ~ ryhma.id) }}
+{% endblock %}

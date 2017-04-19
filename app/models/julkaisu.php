@@ -48,6 +48,20 @@ class Julkaisu extends BaseModel {
         return $julkaisut;
     }
 
+    public static function haeRyhmalla($ryhma) {
+        $kysely = DB::connection()->prepare('SELECT id, kayttaja, ryhma, teksti, aika FROM Julkaisu WHERE ryhma = :ryhma ORDER BY aika DESC');
+        $kysely->bindValue(':ryhma', $ryhma->id);
+        $kysely->execute();
+        $rivit = $kysely->fetchAll();
+
+        $julkaisut = array();
+        foreach ($rivit as $rivi) {
+            $julkaisut[] = self::lue_rivi($rivi);
+        }
+
+        return $julkaisut;
+    }
+
     public static function hae($id) {
         $kysely = DB::connection()->prepare('SELECT id, kayttaja, ryhma, teksti, aika FROM Julkaisu WHERE id = :id LIMIT 1');
         $kysely->execute(array('id' => $id));

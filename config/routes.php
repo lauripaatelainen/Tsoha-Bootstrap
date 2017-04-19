@@ -25,19 +25,19 @@ $routes->get('/create_group', function() {
 });
 
 $routes->get('/group', function() {
-    HelloWorldController::list_groups();
+    RyhmaController::list_groups();
 });
 
-$routes->get('/group/1', function() {
-    HelloWorldController::show_group();
+$routes->get('/group/:id', function($id) {
+    RyhmaController::show_group($id);
 });
 
-$routes->get('/group/1/edit', function() {
-    HelloWorldController::edit_group();
+$routes->get('/group/:id/edit', function($id) {
+    RyhmaController::edit_group($id);
 });
 
-$routes->get('/group/1/members', function() {
-    HelloWorldController::group_members();
+$routes->get('/group/:id/members', function($id) {
+    RyhmaController::group_members($id);
 });
 
 $routes->get('/user', function() {

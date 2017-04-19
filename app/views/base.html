@@ -48,15 +48,21 @@
         {% if user_logged_in %}
         <div id="left-panel">
             Hei, {{user_logged_in.kayttajatunnus}}!<br>
-            <form action="{{base_path}}/logout" method="post"><button type="submit" class="btn btn-sm btn-default">Kirjaudu ulos</button></form><br>
+            <a href="{{base_path}}/user/{{user_logged_in.id}}/edit" class="btn btn-sm btn-default">Muokkaa profiilia</a><form style="display:inline;" action="{{base_path}}/logout" method="post"><button type="submit" class="btn btn-sm btn-default">Kirjaudu ulos</button></form><br>
+            
+            {% set ryhmat = user_logged_in.haeRyhmat() %}
             <h4>Ryhmät</h4>
+            
+            {% if ryhmat|length > 0 %}
+            Olet jäsenenä seuraavissa ryhmissä:
             <ul class="list-unstyled" style="margin-left: 0.5em;">
-                <li><a href="#">Ryhmä 1</a></li>
-                <li><a href="#">Ryhmä 2</a></li>
-                <li><a href="#">Ryhmä 3</a></li>
+            {% for ryhma in ryhmat %}
+                <li><a href="{{base_path}}/group/{{ryhma.id}}">{{ryhma.nimi}}{% if ryhma.yllapitaja.id == user_logged_in.id %} *{% endif %}</a></li>
+            {% endfor %}
             </ul>
-            <button class="btn btn-sm btn-primary">Etsi ryhmiä</button>
-            <button class="btn btn-sm btn-default">Luo uusi ryhmä</button>
+            {% endif %}
+            <a href="{{base_path}}/group" class="btn btn-sm btn-primary">Etsi ryhmiä</a>
+            <a href="{{base_path}}/create_group" class="btn btn-sm btn-default">Luo uusi ryhmä</a>
             <h4>Ryhmäkutsut</h4>
             <ul class="list-unstyled group-invitations-list">
                 <li>

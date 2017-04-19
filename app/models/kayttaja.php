@@ -8,37 +8,36 @@ class Kayttaja extends BaseModel {
         parent::__construct($attributes);
         $this->validators = array('tarkista_kayttajatunnus', 'tarkista_salasana');
     }
+    
+    public static function lue_rivi($rivi) {
+        return new Kayttaja(array(
+                'id' => $rivi['id'],
+                'kayttajatunnus' => $rivi['kayttajatunnus'],
+                'salasana1' => $rivi['salasana'],
+                'salasana2' => $rivi['salasana'],
+                'yllapitaja' => $rivi['yllapitaja']
+        ));
+    }
 
     public static function kaikki() {
-        $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja');
+        $kysely = DB::connection()->prepare('SELECT id, kayttajatunnus, salasana, yllapitaja FROM Kayttaja');
         $kysely->execute();
         $rivit = $kysely->fetchAll();
 
         $kayttajat = array();
         foreach ($rivit as $rivi) {
-            $kayttajat[] = new Kayttaja(array(
-                'id' => $rivi['id'],
-                'kayttajatunnus' => $rivi['kayttajatunnus'],
-                'salasana' => $rivi['salasana'],
-                'yllapitaja' => $rivi['yllapitaja']
-            ));
+            $kayttajat[] = self::lue_rivi($rivi);
         }
 
         return $kayttajat;
     }
 
     public static function hae($id) {
-        $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE id = :id LIMIT 1');
+        $kysely = DB::connection()->prepare('SELECT id, kayttajatunnus, salasana, yllapitaja FROM Kayttaja WHERE id = :id LIMIT 1');
         $kysely->execute(array('id' => $id));
         $rivi = $kysely->fetch();
         if ($rivi) {
-            $kayttaja = new Kayttaja(array(
-                'id' => $rivi['id'],
-                'kayttajatunnus' => $rivi['kayttajatunnus'],
-                'salasana1' => $rivi['salasana'],
-                'salasana2' => $rivi['salasana'],
-                'yllapitaja' => $rivi['yllapitaja']
-            ));
+            $kayttaja = self::lue_rivi($rivi);
             return $kayttaja;
         } else {
             return null;
@@ -46,21 +45,27 @@ class Kayttaja extends BaseModel {
     }
 
     public static function haeKayttajatunnuksella($kayttajatunnus) {
-        $kysely = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE kayttajatunnus = :kayttajatunnus LIMIT 1');
+        $kysely = DB::connection()->prepare('SELECT id, kayttajatunnus, salasana, yllapitaja FROM Kayttaja WHERE kayttajatunnus = :kayttajatunnus LIMIT 1');
         $kysely->execute(array('kayttajatunnus' => $kayttajatunnus));
         $rivi = $kysely->fetch();
         if ($rivi) {
-            $kayttaja = new Kayttaja(array(
-                'id' => $rivi['id'],
-                'kayttajatunnus' => $rivi['kayttajatunnus'],
-                'salasana1' => $rivi['salasana'],
-                'salasana2' => $rivi['salasana'],
-                'yllapitaja' => $rivi['yllapitaja']
-            ));
+            $kayttaja = self::lue_rivi($rivi);;
             return $kayttaja;
         } else {
             return null;
         }
+    }
+    
+    public static function haeRyhmaJasenyydella($ryhma) {
+        $kysely = DB::connection()->prepare('SELECT id, kayttajatunnus, salasana, yllapitaja FROM Kayttaja INNER JOIN RyhmanJasenyys ON RyhmanJasenyys.kayttaja = Kayttaja.id WHERE RyhmanJasenyys.ryhma = :ryhma');
+        $kysely->bindValue(':ryhma', $ryhma->id);
+        $kysely->execute();
+        $rivit = $kysely->fetchAll();
+        $kayttajat = array();
+        foreach ($rivit as $rivi) {
+            $kayttajat[] = self::lue_rivi($rivi);
+        }
+        return $kayttajat;
     }
 
     public static function autentikoi($kayttajatunnus, $salasana) {
@@ -95,6 +100,10 @@ class Kayttaja extends BaseModel {
     public function poista() {
         $kysely = DB::connection()->prepare('DELETE FROM Kayttaja WHERE id = :id');
         $kysely->execute(array('id' => $this->id));
+    }
+    
+    public function haeRyhmat() {
+        return Ryhma::haeJasenella($this);
     }
 
     public function tarkista_kayttajatunnus() {
