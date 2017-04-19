@@ -6,7 +6,7 @@ class Ryhma extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('tarkista_teksti');
+        $this->validators = array('tarkista_nimi');
     }
     
     private static function lue_rivi($rivi) {
@@ -58,6 +58,7 @@ class Ryhma extends BaseModel {
 
     public function tallenna_vanha() {
         $kysely = DB::connection()->prepare('UPDATE Ryhma SET nimi = :nimi, kuvaus = :kuvaus, suljettu = :suljettu, yllapitaja = :yllapitaja WHERE id = :id');
+        $kysely->bindValue(':id', $this->id);
         $kysely->bindValue(':nimi', $this->nimi);
         $kysely->bindValue(':kuvaus', $this->kuvaus);
         $kysely->bindValue(':suljettu', $this->suljettu, PDO::PARAM_BOOL);
@@ -104,5 +105,15 @@ class Ryhma extends BaseModel {
         $kysely->bindValue(':ryhma', $this->id);
         $kysely->bindValue(':kayttaja', $kayttaja->id);
         $kysely->execute();
+        Kint::dump($kysely);
+    }
+    
+    public function tarkista_nimi() {
+        $errors = array();
+        if (trim($this->nimi) == '') {
+            $errors[] = 'Nimi ei saa olla tyhjä';
+        }
+        
+        return $errors;
     }
 }
