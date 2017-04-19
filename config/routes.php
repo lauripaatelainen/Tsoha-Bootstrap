@@ -40,6 +40,10 @@ $routes->get('/group/:id/members', function($id) {
     RyhmaController::group_members($id);
 });
 
+$routes->post('/group/:id/remove_member', function($id) {
+    RyhmaController::remove_member($id);
+});
+
 $routes->get('/user', function() {
     KayttajaController::list_users();
 });

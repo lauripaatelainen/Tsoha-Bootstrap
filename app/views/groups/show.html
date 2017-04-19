@@ -2,6 +2,9 @@
 {% import "macros.html" as macros %}
 {% block content %}
 <h1>{{ryhma.nimi}}</h1>
+
+{% include 'messages.html' %}
+
 <div id='group-description'>
     {{ryhma.kuvaus}}
 </div>
@@ -44,7 +47,25 @@
 </ul>
 {% endif %}
 
+{% if user_logged_in in ryhma.haeJasenet() %}
 <h3>Uusimmat julkaisut</h3>
 
 {{ macros.post_list(_context, ryhma.haeJulkaisut(), '/group/' ~ ryhma.id) }}
+
+{% else %}
+<h3>Et kuulu tähän ryhmään</h3>
+{% if ryhma.suljettu %}
+<form action="{{base_path}}/group/{{ryhma.id}}/request_join" method="post">
+    <p>Ryhmä on suljettu. Kirjoita viesti ja pyydä liittyä ryhmään.</p>
+    Viesti: <textarea rows="8" cols="40"></textarea><br/>
+    <input type="submit" class="btn btn-primary" value="Pyydä liittyä"/>
+</form>
+{% else %}
+<form action="{{base_path}}/group/{{ryhma.id}}/join" method="post">
+    <p>Ryhmä on avoin, voit liittyä ryhmään.</p>
+    <input type="submit" class="btn btn-primary" value="Liity"/>
+</form>
+
+{% endif %}
+{% endif %}
 {% endblock %}

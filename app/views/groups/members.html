@@ -2,11 +2,13 @@
 {% block content %}
 <h1>{{ryhma.nimi}}</h1>
 
+{% include 'messages.html' %}
+
 <h3>Käyttäjät</h3>
 
 <ul class="list-unstyled">
     {% for kayttaja in ryhma.haeJasenet() %}
-    <li><a href="{{base_path}}/user/{{kayttaja.id}}">{{kayttaja.kayttajatunnus}}</a> {% if ryhma.yllapitaja.id == user_logged_in.id %}<form style="display:inline;" method="post" action="{{base_path}}/group/{{ryhma.id}}/remove_member"><input name="user" value="{{kayttaja.id}}" type="hidden"/><button type="submit" class="btn btn-sm btn-danger">Poista</button></form>{% endif %}</li>
+    <li style="margin: 0.5em;"><a href="{{base_path}}/user/{{kayttaja.id}}">{{kayttaja.kayttajatunnus}}</a> {% if kayttaja.id == ryhma.yllapitaja.id %}(ylläpitäjä){% elseif ryhma.yllapitaja.id == user_logged_in.id %}<form style="display:inline;" method="post" action="{{base_path}}/group/{{ryhma.id}}/remove_member"><input name="user" value="{{kayttaja.id}}" type="hidden"/><button type="submit" class="btn btn-sm btn-danger">Poista</button></form>{% endif %}</li>
     {% endfor %}
 </ul>
 

@@ -98,4 +98,11 @@ class Ryhma extends BaseModel {
         }
         return $ryhmat;
     }
+    
+    public function poistaJasen($kayttaja) {
+        $kysely = DB::connection()->prepare('DELETE FROM RyhmanJasenyys WHERE kayttaja = :kayttaja AND ryhma = :ryhma');
+        $kysely->bindValue(':ryhma', $this->id);
+        $kysely->bindValue(':kayttaja', $kayttaja->id);
+        $kysely->execute();
+    }
 }
