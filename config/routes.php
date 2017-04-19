@@ -24,6 +24,10 @@ $routes->get('/create_group', function() {
     RyhmaController::create_group();
 });
 
+$routes->post('/create_group', function() {
+    RyhmaController::handle_create_group();
+});
+
 $routes->get('/group', function() {
     RyhmaController::list_groups();
 });
