@@ -36,6 +36,18 @@ $routes->get('/group/:id/edit', function($id) {
     RyhmaController::edit_group($id);
 });
 
+$routes->post('/group/:id/edit', function($id) {
+    RyhmaController::handle_edit_group($id);
+});
+
+$routes->get('/group/:id/delete', function($id) {
+    RyhmaController::delete_group($id);
+});
+
+$routes->post('/group/:id/delete', function($id) {
+    RyhmaController::handle_delete_group($id);
+});
+
 $routes->get('/group/:id/members', function($id) {
     RyhmaController::group_members($id);
 });
