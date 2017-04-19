@@ -57,7 +57,7 @@ class Kayttaja extends BaseModel {
     }
     
     public static function haeRyhmaJasenyydella($ryhma) {
-        $kysely = DB::connection()->prepare('SELECT id, kayttajatunnus, salasana, yllapitaja FROM Kayttaja INNER JOIN RyhmanJasenyys ON RyhmanJasenyys.kayttaja = Kayttaja.id WHERE RyhmanJasenyys.ryhma = :ryhma UNION SELECT Kayttaja.id, Kayttaja.kayttajatunnus, Kayttaja.salasana, Kayttaja.yllapitaja FROM Kayttaja INNER JOIN Ryhma ON Kayttaja.id = Ryhma.yllapitaja');
+        $kysely = DB::connection()->prepare('SELECT id, kayttajatunnus, salasana, yllapitaja FROM Kayttaja INNER JOIN RyhmanJasenyys ON RyhmanJasenyys.kayttaja = Kayttaja.id WHERE RyhmanJasenyys.ryhma = :ryhma UNION SELECT Kayttaja.id, Kayttaja.kayttajatunnus, Kayttaja.salasana, Kayttaja.yllapitaja FROM Kayttaja INNER JOIN Ryhma ON Kayttaja.id = Ryhma.yllapitaja WHERE Ryhma.id = :ryhma');
         $kysely->bindValue(':ryhma', $ryhma->id);
         $kysely->execute();
         $rivit = $kysely->fetchAll();
