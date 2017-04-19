@@ -11,7 +11,11 @@ class Julkaisu extends BaseModel {
     
     private static function lue_rivi($rivi) {
         $kayttaja = Kayttaja::hae($rivi['kayttaja']);
-        $ryhma = null; /* Ryhma::hae($rivi['ryhma']); */
+        if ($rivi['ryhma'] == null) {
+            $ryhma = null;
+        } else {
+            $ryhma = Ryhma::hae($rivi['ryhma']);
+        }
         return new Julkaisu(array(
             'id' => $rivi['id'],
             'kayttaja' => $kayttaja,
@@ -24,6 +28,33 @@ class Julkaisu extends BaseModel {
     public static function kaikki_julkiset() {
         $kysely = DB::connection()->prepare('SELECT id, kayttaja, ryhma, teksti, aika FROM Julkaisu WHERE ryhma is null ORDER BY aika DESC');
         $kysely->execute();
+        $rivit = $kysely->fetchAll();
+
+        $julkaisut = array();
+        foreach ($rivit as $rivi) {
+            $julkaisut[] = self::lue_rivi($rivi);
+        }
+
+        return $julkaisut;
+    }
+    
+    public static function kaikki_kayttajalle_nakyvat($kayttaja) {
+        $sql =  'SELECT id, kayttaja, ryhma, teksti, aika '. /* julkiset */
+                '  FROM Julkaisu '.
+                '  WHERE ryhma is null '.  
+                'UNION SELECT Julkaisu.id, Julkaisu.kayttaja, Julkaisu.ryhma, Julkaisu.teksti, Julkaisu.aika '. /* ryhmäjäsenyyksien kautta näkyvät */
+                '  FROM Julkaisu '.
+                '  INNER JOIN RyhmanJasenyys ON RyhmanJasenyys.ryhma = Julkaisu.ryhma '.
+                '  WHERE RyhmanJasenyys.kayttaja = :kayttaja '.
+                'UNION SELECT Julkaisu.id, Julkaisu.kayttaja, Julkaisu.ryhma, Julkaisu.teksti, Julkaisu.aika '. /* ylläpidettyjen ryhmien julkaisut */
+                '  FROM Julkaisu '.
+                '  INNER JOIN Ryhma ON Ryhma.id = Julkaisu.ryhma '.
+                '  WHERE Ryhma.yllapitaja = :kayttaja '.
+                'ORDER BY aika DESC';
+        $kysely = DB::connection()->prepare($sql);
+        $kysely->bindValue(':kayttaja', $kayttaja->id);
+        $kysely->execute();
+        
         $rivit = $kysely->fetchAll();
 
         $julkaisut = array();

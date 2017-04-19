@@ -7,6 +7,9 @@
     <div id="p{{julkaisu.id}}" class="post">
         
         <div class="post-user">{{ macros.user_link(context, julkaisu.kayttaja) }}</div>
+        {% if julkaisu.ryhma %}
+        <div class="post-group">ryhmään <a href="{{context.base_path}}/group/{{julkaisu.ryhma.id}}">{{julkaisu.ryhma.nimi}}</a></div>
+        {% endif %}
         <div class="post-timestamp">{{julkaisu.aika}}</div>
         <div class="post-content">{{julkaisu.teksti}}</div>
         <div class="post-info">{{julkaisu.haeTykkaykset()|length}} tykkäystä</div>

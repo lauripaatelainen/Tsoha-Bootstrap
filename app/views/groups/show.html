@@ -47,7 +47,7 @@
 </ul>
 {% endif %}
 
-{% if user_logged_in in ryhma.haeJasenet() %}
+{% if user_logged_in.id in ryhma.haeJasenet()|ids %}
 <h3>Uusimmat julkaisut</h3>
 
 {{ macros.post_list(_context, ryhma.haeJulkaisut(), '/group/' ~ ryhma.id) }}
