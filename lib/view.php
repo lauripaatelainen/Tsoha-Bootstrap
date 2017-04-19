@@ -32,7 +32,17 @@
 
       $twig_loader = new Twig_Loader_Filesystem('app/views');
 
-      return new Twig_Environment($twig_loader);
+      $ids_filter = new Twig_SimpleFilter('ids', function($objs) {
+          $ids = array();
+          foreach ($objs as $obj) {
+              $ids[] = $obj->id;
+          }
+          return $ids;
+      });
+      
+      $twig = new Twig_Environment($twig_loader);
+      $twig->addFilter($ids_filter);
+      return $twig;
     }
 
     private static function set_flash_message(&$content){
