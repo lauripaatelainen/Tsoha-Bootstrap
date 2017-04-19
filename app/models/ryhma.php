@@ -105,7 +105,6 @@ class Ryhma extends BaseModel {
         $kysely->bindValue(':ryhma', $this->id);
         $kysely->bindValue(':kayttaja', $kayttaja->id);
         $kysely->execute();
-        Kint::dump($kysely);
     }
     
     public function tarkista_nimi() {

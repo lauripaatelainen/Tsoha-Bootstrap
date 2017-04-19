@@ -21,7 +21,7 @@ $routes->post('/logout', function() {
 });
 
 $routes->get('/create_group', function() {
-    HelloWorldController::create_group();
+    RyhmaController::create_group();
 });
 
 $routes->get('/group', function() {

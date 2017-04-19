@@ -47,4 +47,30 @@ class RyhmaController extends BaseController {
             View::make('groups/edit.html', array('ryhma' => $ryhma));
         }
     }
+    
+    public static function handle_edit_group($id) {
+        self::check_logged_in();
+        $kayttaja = self::get_user_logged_in();
+        $ryhma = Ryhma::hae($id);
+        
+        if ($kayttaja->id != $ryhma->yllapitaja->id && !$kayttaja->yllapitaja) {
+            Redirect::to('/group/' . $id, array('error_messages' => array('Vain ryhmän ylläpitäjä voi muokata ryhmää')));
+        } else {
+            $ryhma->nimi = $_POST['nimi'];
+            $ryhma->kuvaus = $_POST['kuvaus'];
+            $ryhma->suljettu = isset($_POST['suljettu']);
+            
+            try {
+                $ryhma->tallenna();
+                Redirect::to('/group/' . $id . '/edit', array('message' => 'Muutokset tallennettu'));
+            } catch (ValidationException $ex) {
+                Redirect::to('/group/' . $id . '/edit', array('error_messages' => $ex->getErrors()));
+            } catch (Exception $ex) {
+                Redirect::to('/group/' . $id . '/edit', array('error_messages' => array($ex->getMessage())));
+            }
+            
+
+            View::make('groups/edit.html', array('ryhma' => $ryhma));
+        }
+    }
 }
