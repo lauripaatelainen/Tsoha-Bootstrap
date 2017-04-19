@@ -2,6 +2,7 @@
 {% import "macros.html" as macros %}
 {% block content %}
 <h1>Käyttäjä: {{user.kayttajatunnus}}</h1>
+{% include "messages.html" %}
 <br/>
 <div id='user-actions'>
     {% if user_logged_in.yllapitaja %}<a href="{{base_path}}/user/{{user.id}}/edit" class="btn btn-default">Muokkaa käyttäjää (vain adminit)</a>{% endif %}
