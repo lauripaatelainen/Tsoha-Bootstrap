@@ -32,7 +32,7 @@ Jukka          | Jukka123! |
 * [Rekisteröinti](http://lpaatela.users.cs.helsinki.fi/tsoha/register)
 * [Etusivu](http://lpaatela.users.cs.helsinki.fi/tsoha)
 * [Ryhmän luonti](http://lpaatela.users.cs.helsinki.fi/tsoha/create_group)
-* [Ryhmien listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group)
+* [Ryhmien listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group) (vielä toteuttamatta)
 * [Ryhmän näyttö](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1)
 * [Ryhmän muokkaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1/edit)
 * [Ryhmän jäsenten listaus](http://lpaatela.users.cs.helsinki.fi/tsoha/group/1/members)
