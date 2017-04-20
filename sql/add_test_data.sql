@@ -7,8 +7,8 @@ INSERT INTO Kayttaja(kayttajatunnus, salasana, yllapitaja) VALUES('Hannu', 'Hann
 INSERT INTO Kayttaja(kayttajatunnus, salasana, yllapitaja) VALUES('Seppo', 'Seppo123!', false);
 INSERT INTO Kayttaja(kayttajatunnus, salasana, yllapitaja) VALUES('Jukka', 'Jukka123!', false);
 
-INSERT INTO Ryhma(nimi, kuvaus, suljettu, yllapitaja) VALUES('Lorem ipsum ryhmä', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut placerat nibh. Sed quis lorem in dui viverra convallis vel quis urna. Vivamus pulvinar at enim id bibendum. Nunc in semper sapien. Nulla ut elit bibendum, malesuada orci eget, ornare sem. Proin ut lorem neque. Morbi accumsan nisl nec nibh imperdiet hendrerit. Nunc egestas eleifend dolor, nec aliquam est consectetur sit amet.', false, 1); 
-INSERT INTO Ryhma(nimi, kuvaus, suljettu, yllapitaja) VALUES('Ryhmä suljettu testi', 'Tämä ryhmä on suljettu ja sitä ylläpitää Pekka', true, 2); 
+INSERT INTO Ryhma(nimi, kuvaus, suljettu, yllapitaja) VALUES('Julkinen testiryhmä', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut placerat nibh. Sed quis lorem in dui viverra convallis vel quis urna. Vivamus pulvinar at enim id bibendum. Nunc in semper sapien. Nulla ut elit bibendum, malesuada orci eget, ornare sem. Proin ut lorem neque. Morbi accumsan nisl nec nibh imperdiet hendrerit. Nunc egestas eleifend dolor, nec aliquam est consectetur sit amet.', false, 1); 
+INSERT INTO Ryhma(nimi, kuvaus, suljettu, yllapitaja) VALUES('Suljettu testiryhmä', 'Tämä ryhmä on suljettu ja sitä ylläpitää Pekka', true, 2); 
 
 INSERT INTO RyhmanJasenyys(kayttaja, ryhma) VALUES(1, 2);
 INSERT INTO RyhmanJasenyys(kayttaja, ryhma) VALUES(2, 1);
