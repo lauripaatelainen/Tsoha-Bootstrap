@@ -30,7 +30,11 @@ class RyhmaController extends BaseController {
 
         try {
             $ryhma->poistaJasen($poistettava_kayttaja);
-            Redirect::to('/group/' . $id . '/members', array('message' => 'Ryhmän jäsen poistettu'));
+            if ($poistettava_kayttaja->id == $kirjautunut_kayttaja->id) {
+                Redirect::to('/', array('message' => 'Poistuit ryhmästä ' + $ryhma->nimi));
+            } else {
+                Redirect::to('/group/' . $id . '/members', array('message' => 'Ryhmän jäsen poistettu'));
+            }
         } catch (Exception $ex) {
             Redirect::to('/group/' . $id . '/members', array('error_messages' => array('Virhe: ' . $ex->getMessage())));
         }
@@ -121,6 +125,12 @@ class RyhmaController extends BaseController {
                 Redirect::to('/group/' . $id . '/delete', array('error_messages' => array($ex->getMessage())));
             }
         }
+    }
+    
+    public static function list_groups() {
+        self::check_logged_in();
+        $ryhmat = Ryhma::kaikki();
+        View::make('groups/list.html', array('kaikkiryhmat' => $ryhmat));
     }
 
 }

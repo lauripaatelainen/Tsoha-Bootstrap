@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Ryhmät</h1>
+
+<ul class="list-unstyled">
+    {% set kayttajan_ryhmat = user_logged_in.haeRyhmat()|ids %}
+    {% for ryhma in kaikkiryhmat %}
+        <li><a href="{{base_path}}/group/{{ryhma.id}}">{{ryhma.nimi}}</a>
+        {% if ryhma.suljettu %}
+            (suljettu)
+        {% else %}
+            (julkinen)
+        {% endif %}
+        
+        {% if ryhma.yllapitaja.id != user_logged_in.id %}
+            {% if ryhma.id in kayttajan_ryhmat %}
+            <form style="display: inline;" action="{{base_path}}/group/{{ryhma.id}}/remove_member" method="post">
+                <input type="hidden" name="user" value="{{user_logged_in.id}}"/>
+                <button type="submit" class="btn btn-sm btn-warning">Poistu ryhmästä</button>
+            </form>
+            {% elseif ryhma.suljettu %}
+                <button class="btn btn-sm btn-primary">Pyydä liittyä</button>
+            {% else %}
+                <button class="btn btn-sm btn-primary">Liity</button>
+            {% endif %}
+        {% endif %}
+        
+        {% if user_logged_in.yllapitaja or user_logged_in.id == ryhma.yllapitaja.id %}
+        <a href="{{base_path}}/group/{{ryhma.id}}/delete" class="btn btn-sm btn-danger">Poista ryhmä</a>
+        {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
