@@ -56,6 +56,18 @@ $routes->post('/group/:id/remove_member', function($id) {
     RyhmaController::remove_member($id);
 });
 
+$routes->post('/group/:id/join', function($id) {
+    RyhmaController::join_group($id);
+});
+
+$routes->get('/group/:id/request_join', function($id) {
+    RyhmaController::request_join($id);
+});
+
+$routes->post('/group/:id/request_join', function($id) {
+    RyhmaController::handle_request_join($id);
+});
+
 $routes->get('/user', function() {
     KayttajaController::list_users();
 });

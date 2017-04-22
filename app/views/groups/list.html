@@ -21,7 +21,9 @@
             {% elseif ryhma.suljettu %}
                 <button class="btn btn-sm btn-primary">Pyydä liittyä</button>
             {% else %}
-                <button class="btn btn-sm btn-primary">Liity</button>
+            <form style="display: inline;" action="{{base_path}}/group/{{ryhma.id}}/join" method="post">
+                <button type="submit" class="btn btn-sm btn-primary">Liity</button>
+            </form>
             {% endif %}
         {% endif %}
         

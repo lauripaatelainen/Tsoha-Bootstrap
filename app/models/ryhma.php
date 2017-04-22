@@ -107,6 +107,13 @@ class Ryhma extends BaseModel {
         $kysely->execute();
     }
     
+    public function lisaaJasen($kayttaja) {
+        $kysely = DB::connection()->prepare('INSERT INTO RyhmanJasenyys(ryhma, kayttaja) VALUES(:ryhma, :kayttaja)');
+        $kysely->bindValue(':ryhma', $this->id);
+        $kysely->bindValue(':kayttaja', $kayttaja->id);
+        $kysely->execute();
+    }
+    
     public function tarkista_nimi() {
         $errors = array();
         if (trim($this->nimi) == '') {

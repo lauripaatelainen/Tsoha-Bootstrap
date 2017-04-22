@@ -31,7 +31,7 @@ class RyhmaController extends BaseController {
         try {
             $ryhma->poistaJasen($poistettava_kayttaja);
             if ($poistettava_kayttaja->id == $kirjautunut_kayttaja->id) {
-                Redirect::to('/', array('message' => 'Poistuit ryhmästä ' + $ryhma->nimi));
+                Redirect::to('/', array('message' => 'Poistuit ryhmästä ' . $ryhma->nimi));
             } else {
                 Redirect::to('/group/' . $id . '/members', array('message' => 'Ryhmän jäsen poistettu'));
             }
@@ -133,4 +133,25 @@ class RyhmaController extends BaseController {
         View::make('groups/list.html', array('kaikkiryhmat' => $ryhmat));
     }
 
+    public static function join_group($id) {
+        self::check_logged_in();
+        $kayttaja = self::get_user_logged_in();
+        $ryhma = Ryhma::hae($id);
+        if ($ryhma->suljettu) {
+            Redirect::to('/group/' . $id . '/request_join', array('message' => 'Ryhmä on suljettu, voit pyytää liittyä ryhmään'));
+            return;
+        }
+        
+        if (in_array($ryhma, $kayttaja->haeRyhmat())) {
+            Redirect::to('/group/' . $id, array('message' => 'Kuulut jo tähän ryhmään'));
+            return;
+        }
+        
+        try {
+            $ryhma->lisaaJasen($kayttaja);
+            Redirect::to('/group/' . $id, array('message' => 'Ryhmään liitytty'));
+        } catch (Exception $ex) {
+            Redirect::to('/', array('error_messages' => array('Ryhmään liittyminen epäonnistui')));
+        }
+    }
 }
