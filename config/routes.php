@@ -4,10 +4,6 @@ $routes->get('/', function() {
     MainController::index();
 });
 
-$routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-});
-
 $routes->get('/login', function() {
     KayttajaController::login();
 });
