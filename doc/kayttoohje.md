@@ -17,7 +17,6 @@ Jukka          | Jukka123! |
 
 
 Sovelluksesta on vielä seuraavat toiminnot kesken:
-- Ryhmiin liittyminen / liittymispyynnön lähettäminen
 - Jäsenten kutsuminen ryhmiin
 - Ryhmään julkaisu (testidatan kautta lisättyjä julkaisuja voi kuitenkin kommentoida ja niistä voi tykätä)
 
