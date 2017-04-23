@@ -80,6 +80,14 @@ $routes->post('/group/:id/decline_request', function($id) {
     RyhmaController::decline_request($id);
 });
 
+$routes->post('/group/:id/accept_invitation', function($id) {
+    RyhmaController::accept_invitation($id); 
+});
+
+$routes->post('/group/:id/decline_invitation', function($id) {
+    RyhmaController::decline_invitation($id);
+});
+
 $routes->get('/group/:id/invite_users', function($id) {
     RyhmaController::invite_users($id);
 });

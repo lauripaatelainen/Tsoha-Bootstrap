@@ -278,4 +278,35 @@ class RyhmaController extends BaseController {
             Redirect::to('/group/' . $id, array('error_messages' => array('Kutsujen lähetys epäonnistui')));
         }
     }
+    
+    
+    
+    public static function accept_invitation($id) {
+        self::check_logged_in();
+        $ryhma = Ryhma::hae($id);
+        $kayttaja = self::get_user_logged_in();
+        
+        $kutsu = Kutsu::hae($ryhma, $kayttaja);
+        try {
+            $ryhma->lisaaJasen($kayttaja);
+            $kutsu->poista();
+            Redirect::to('/', array('message' => 'Kutsu hyväksytty'));
+        } catch (Exception $ex) {
+            Redirect::to('/', array('error_messages' => array('Kutsun hyväksyminen epäonnistui')));
+        }
+    }
+    
+    public static function decline_invitation($id) {
+        self::check_logged_in();
+        $ryhma = Ryhma::hae($id);
+        $kayttaja = self::get_user_logged_in();
+        
+        $kutsu = Kutsu::hae($ryhma, $kayttaja);
+        try {
+            $kutsu->poista();
+            Redirect::to('/', array('message' => 'Kutsu hylätty'));
+        } catch (Exception $ex) {
+            Redirect::to('/', array('error_messages' => array('Kutsun hylkääminen epäonnistui')));
+        }
+    }
 }
