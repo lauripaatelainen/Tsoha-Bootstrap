@@ -105,6 +105,10 @@ class Kayttaja extends BaseModel {
     public function haeRyhmat() {
         return Ryhma::haeJasenella($this);
     }
+    
+    public function haeKutsut() {
+        return Kutsu::haeKayttajalla($this);
+    }
 
     public function tarkista_kayttajatunnus() {
         $errors = array();

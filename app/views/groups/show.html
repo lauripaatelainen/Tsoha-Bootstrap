@@ -19,6 +19,7 @@
     <a href="{{base_path}}/group/{{ryhma.id}}/members" class="btn btn-primary">{{ryhma.haeJasenet()|length}} jäsentä</a>
     {% if ryhma.yllapitaja.id == user_logged_in.id %}
     <a href="{{base_path}}/group/{{ryhma.id}}/edit" class="btn btn-default">Muokkaa ryhmää</a>
+    <a href="{{base_path}}/group/{{ryhma.id}}/invite_users" class="btn btn-default">Kutsu käyttäjiä</a>
     {% else %}
     <form style="display: inline;" action="{{base_path}}/group/{{ryhma.id}}/remove_member" method="post">
         <input type="hidden" name="user" value="{{user_logged_in.id}}"/>

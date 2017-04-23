@@ -80,6 +80,14 @@ $routes->post('/group/:id/decline_request', function($id) {
     RyhmaController::decline_request($id);
 });
 
+$routes->get('/group/:id/invite_users', function($id) {
+    RyhmaController::invite_users($id);
+});
+
+$routes->post('/group/:id/invite_users', function($id) {
+    RyhmaController::handle_invite_users($id);
+});
+
 $routes->get('/user', function() {
     KayttajaController::list_users();
 });

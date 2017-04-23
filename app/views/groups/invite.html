@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Kutsu käyttäjiä</h1>
+
+{% include 'messages.html' %}
+
+<h3>Kutsu käyttäjiä ryhmään {{ryhma.nimi}}</h3>
+<p>Valitse luettelosta käyttäjät joille, kutsu lähetetään, kirjoita viesti ja paina 'Lähetä kutsut'</p>
+
+<form method="post">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <td></td>
+                <td>Käyttäjätunnus</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% set jasenet = ryhma.haeJasenet()|ids %}
+            {% set kutsutut = ryhma.haeKutsut()|kayttajat|ids %}
+
+            {% for kayttaja in users %}
+            {% if kayttaja.id not in jasenet and kayttaja.id not in kutsutut %}
+            <tr>
+                <td><input type="checkbox" name="kayttajat[]" value="{{kayttaja.id}}" /></td>
+                <td><a href="{{base_path}}/user/{{kayttaja.id}}">{{kayttaja.kayttajatunnus}}</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    Viesti: <textarea name="viesti"></textarea>
+    <br/>
+    <input type="submit" class="btn btn-primary" value="Lähetä kutsut"/>
+</form>
+
+{% endblock %}

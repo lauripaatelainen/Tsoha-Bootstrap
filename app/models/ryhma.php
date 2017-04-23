@@ -71,6 +71,10 @@ class Ryhma extends BaseModel {
         $kysely->execute(array('id' => $this->id));
     }
     
+    public function haeKutsut() {
+        return Kutsu::haeRyhmalla($this);
+    }
+    
     /**
      * Palauttaa listan käyttäjistä jotka ovat ryhmän jäseniä
      */

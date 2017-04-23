@@ -19,10 +19,10 @@ INSERT INTO RyhmanJasenyys(kayttaja, ryhma) VALUES(6, 2);
 INSERT INTO RyhmanJasenyys(kayttaja, ryhma) VALUES(6, 1);
 INSERT INTO RyhmanJasenyys(kayttaja, ryhma) VALUES(7, 1);
 
-INSERT INTO Kutsu(ryhma, kutsuttu, viesti) VALUES (1, 4, 'Haluatko liittyä tähän ryhmään?');
-INSERT INTO Kutsu(ryhma, kutsuttu, viesti) VALUES (2, 3, 'Tervetuloa');
-INSERT INTO Kutsu(ryhma, kutsuttu, viesti) VALUES (1, 8, 'Haluatko liittyä tähän ryhmään?');
-INSERT INTO Kutsu(ryhma, kutsuttu, viesti) VALUES (2, 8, 'Tervetuloa');
+INSERT INTO Kutsu(ryhma, kayttaja, viesti) VALUES (1, 4, 'Haluatko liittyä tähän ryhmään?');
+INSERT INTO Kutsu(ryhma, kayttaja, viesti) VALUES (2, 3, 'Tervetuloa');
+INSERT INTO Kutsu(ryhma, kayttaja, viesti) VALUES (1, 8, 'Haluatko liittyä tähän ryhmään?');
+INSERT INTO Kutsu(ryhma, kayttaja, viesti) VALUES (2, 8, 'Tervetuloa');
 
 INSERT INTO Liittymispyynto(kayttaja, ryhma, viesti) VALUES (5, 2, 'Hei, haluaisin liittyä tähän ryhmään');
 INSERT INTO Liittymispyynto(kayttaja, ryhma, viesti) VALUES (7, 2, 'Pääsenkö mukaan?');

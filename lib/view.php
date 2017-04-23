@@ -39,9 +39,18 @@
           }
           return $ids;
       });
+
+      $kayttajat_filter = new Twig_SimpleFilter('kayttajat', function($objs) {
+          $kayttajat = array();
+          foreach ($objs as $obj) {
+              $kayttajat[] = $obj->kayttaja;
+          }
+          return $kayttajat;
+      });
       
       $twig = new Twig_Environment($twig_loader);
       $twig->addFilter($ids_filter);
+      $twig->addFilter($kayttajat_filter);
       return $twig;
     }
 

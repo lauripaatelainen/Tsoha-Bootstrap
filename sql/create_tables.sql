@@ -29,9 +29,9 @@ CREATE TABLE Liittymispyynto(
 
 CREATE TABLE Kutsu(
     ryhma           integer         REFERENCES Ryhma(id) ON DELETE CASCADE,
-    kutsuttu        integer         REFERENCES Kayttaja(id) ON DELETE CASCADE,
+    kayttaja        integer         REFERENCES Kayttaja(id) ON DELETE CASCADE,
     viesti          text            NOT NULL,
-    PRIMARY KEY(ryhma, kutsuttu)
+    PRIMARY KEY(ryhma, kayttaja)
 );
 
 CREATE TABLE Julkaisu(

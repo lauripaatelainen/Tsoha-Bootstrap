@@ -63,29 +63,29 @@
             {% endif %}
             <a href="{{base_path}}/group" class="btn btn-sm btn-primary">Etsi ryhmiä</a>
             <a href="{{base_path}}/create_group" class="btn btn-sm btn-default">Luo uusi ryhmä</a>
+            {% set kutsut = user_logged_in.haeKutsut() %}
+            {% if kutsut|length > 0 %}
             <h4>Ryhmäkutsut</h4>
             <ul class="list-unstyled group-invitations-list">
+                {% for kutsu in kutsut %}
                 <li>
                     <div>
-                        <b>Ryhmä 4</b>
+                        <b>{{kutsu.ryhma.nimi}}</b>
                         <br/>
-                        Haluatko liittyä?
+                        {{kutsu.viesti}}
                         <br/>
-                        <button class="btn btn-sm btn-primary">Liity</button>
-                        <button class="btn btn-sm btn-default">Hylkää</button>
+                        <form style='display: inline;' method='post' action='{{base_path}}/group/{{kutsu.ryhma.id}}/accept_invitation'>
+                            <button type="submit" class="btn btn-sm btn-primary">Liity</button>
+                        </form>
+                        <form style='display: inline;' method='post' action='{{base_path}}/group/{{kutsu.ryhma.id}}/decline_invitation'>
+                            <button type="submit" class="btn btn-sm btn-default">Hylkää</button>
+                        </form>
                     </div>
                 </li>
                 <li>
-                    <div>
-                        <b>Ryhmä 5</b>
-                        <br/>
-                        Tervetuloa tähän ryhmään
-                        <br/>
-                        <button class="btn btn-sm btn-primary">Liity</button>
-                        <button class="btn btn-sm btn-default">Hylkää</button>
-                    </div>
-                </li>
+                {% endfor %}
             </ul>
+            {% endif %}
         </div>
         {% endif %}
             

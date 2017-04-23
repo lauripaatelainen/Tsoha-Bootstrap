@@ -245,4 +245,37 @@ class RyhmaController extends BaseController {
             Redirect::to('/group/' . $id, array('error_messages' => array($ex->getMessage())));
         }
     }
+    
+    public static function invite_users($id) {
+        $ryhma = Ryhma::hae($id);
+        self::check_admin($ryhma->yllapitaja->id);
+        
+        $kayttajat = Kayttaja::kaikki();
+        View::make('groups/invite.html', array('ryhma' => $ryhma, 'users' => $kayttajat));
+    }
+    
+    public static function handle_invite_users($id) {
+        $ryhma = Ryhma::hae($id);
+        self::check_admin($ryhma->yllapitaja->id);
+        
+        try {
+            foreach ($_POST['kayttajat'] as $kayttaja_id) {
+                $kayttaja = Kayttaja::hae($kayttaja_id);
+                $kutsu = Kutsu::hae($ryhma, $kayttaja);
+                if ($kutsu) {
+                    $kutsu->viesti = $_POST['viesti'];
+                } else {
+                    $kutsu = new Kutsu(array(
+                        'ryhma' => $ryhma,
+                        'kayttaja' => $kayttaja,
+                        'viesti' => $_POST['viesti']
+                    ));
+                }
+                $kutsu->tallenna();
+            }
+            Redirect::to('/group/' . $id, array('message' => 'Kutsut lähetetty'));
+        } catch (Exception $ex) {
+            Redirect::to('/group/' . $id, array('error_messages' => array('Kutsujen lähetys epäonnistui')));
+        }
+    }
 }
