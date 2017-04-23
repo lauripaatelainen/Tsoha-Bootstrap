@@ -60,12 +60,12 @@ $routes->post('/group/:id/join', function($id) {
     RyhmaController::join_group($id);
 });
 
-$routes->get('/group/:id/request_join', function($id) {
+$routes->post('/group/:id/request_join', function($id) {
     RyhmaController::request_join($id);
 });
 
-$routes->post('/group/:id/request_join', function($id) {
-    RyhmaController::handle_request_join($id);
+$routes->post('/group/:id/cancel_request_join', function($id) {
+    RyhmaController::cancel_request_join($id);
 });
 
 $routes->get('/user', function() {

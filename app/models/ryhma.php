@@ -122,4 +122,8 @@ class Ryhma extends BaseModel {
         
         return $errors;
     }
+    
+    public function haeLiittymispyynnot() {
+        return Liittymispyynto::ryhmanLiittymispyynnot($this);
+    }
 }

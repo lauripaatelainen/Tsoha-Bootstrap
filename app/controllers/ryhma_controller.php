@@ -5,7 +5,8 @@ class RyhmaController extends BaseController {
     public static function show_group($id) {
         self::check_logged_in();
         $ryhma = Ryhma::hae($id);
-        View::make('groups/show.html', array('ryhma' => $ryhma));
+        $liittymispyynto = Liittymispyynto::hae($ryhma, self::get_user_logged_in());
+        View::make('groups/show.html', array('ryhma' => $ryhma, 'liittymispyynto' => $liittymispyynto));
     }
 
     public static function group_members($id) {
@@ -109,7 +110,7 @@ class RyhmaController extends BaseController {
             View::make('groups/delete.html', array('ryhma' => $ryhma));
         }
     }
-    
+
     public static function handle_delete_group($id) {
         self::check_logged_in();
         $kayttaja = self::get_user_logged_in();
@@ -126,7 +127,7 @@ class RyhmaController extends BaseController {
             }
         }
     }
-    
+
     public static function list_groups() {
         self::check_logged_in();
         $ryhmat = Ryhma::kaikki();
@@ -138,20 +139,60 @@ class RyhmaController extends BaseController {
         $kayttaja = self::get_user_logged_in();
         $ryhma = Ryhma::hae($id);
         if ($ryhma->suljettu) {
-            Redirect::to('/group/' . $id . '/request_join', array('message' => 'Ryhmä on suljettu, voit pyytää liittyä ryhmään'));
+            Redirect::to('/group/' . $id, array('message' => 'Ryhmä on suljettu, voit pyytää liittyä ryhmään'));
             return;
         }
-        
+
         if (in_array($ryhma, $kayttaja->haeRyhmat())) {
             Redirect::to('/group/' . $id, array('message' => 'Kuulut jo tähän ryhmään'));
             return;
         }
-        
+
         try {
             $ryhma->lisaaJasen($kayttaja);
             Redirect::to('/group/' . $id, array('message' => 'Ryhmään liitytty'));
         } catch (Exception $ex) {
             Redirect::to('/', array('error_messages' => array('Ryhmään liittyminen epäonnistui')));
         }
+    }
+
+    public static function request_join($id) {
+        self::check_logged_in();
+        $kayttaja = self::get_user_logged_in();
+        $ryhma = Ryhma::hae($id);
+        
+        if (!$ryhma->suljettu) {
+            self::join_group($id);
+            
+        } else if (in_array($ryhma, $kayttaja->haeRyhmat())) {
+            Redirect::to('/group/' . $id, array('message' => 'Kuulut jo tähän ryhmään'));
+            
+        } else {
+            try {
+                $liittymispyynto = Liittymispyynto::hae($ryhma, $kayttaja);
+                if ($liittymispyynto != null) {
+                    $liittymispyynto->viesti = $_POST['message'];
+                } else {
+                    $liittymispyynto = new Liittymispyynto(array('ryhma' => $ryhma, 'kayttaja' => $kayttaja, 'viesti' => $_POST['message']));
+                }
+                $liittymispyynto->tallenna();
+                Redirect::to('/group/' . $id, array('message' => 'Liittymispyyntö lähetetty'));
+            } catch (Exception $ex) {
+                Redirect::to('/group/' . $id, array('error_messages' => array('Ryhmään liittyminen epäonnistui ('.$ex->getMessage().')')));
+            }
+        }
+    }
+    
+    public static function cancel_request_join($id) {
+        self::check_logged_in();
+        $kayttaja = self::get_user_logged_in();
+        $ryhma = Ryhma::hae($id);
+        
+        $liittymispyynto = Liittymispyynto::hae($ryhma, $kayttaja);
+        if ($liittymispyynto) {
+            $liittymispyynto->poista();
+        }
+        
+        Redirect::to('/group/' . $id, array('message' => 'Liittymispyyntö peruttu'));
     }
 }

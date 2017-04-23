@@ -136,4 +136,7 @@ class Kayttaja extends BaseModel {
         return $errors;
     }
 
+    public function haeLiittymispyynnot() {
+        return Liittymispyynto::haeKayttajalla($this);
+    }
 }

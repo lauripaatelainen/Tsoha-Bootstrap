@@ -19,7 +19,7 @@
                 <button type="submit" class="btn btn-sm btn-warning">Poistu ryhmästä</button>
             </form>
             {% elseif ryhma.suljettu %}
-                <button class="btn btn-sm btn-primary">Pyydä liittyä</button>
+            <a href="{{base_path}}/group/{{ryhma.id}}" class="btn btn-sm btn-primary">Pyydä liittyä</a>
             {% else %}
             <form style="display: inline;" action="{{base_path}}/group/{{ryhma.id}}/join" method="post">
                 <button type="submit" class="btn btn-sm btn-primary">Liity</button>

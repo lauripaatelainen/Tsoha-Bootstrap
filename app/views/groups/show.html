@@ -27,30 +27,29 @@
     {% endif %}
 </div>
 
-{% if ryhma.yllapitaja.id == user_logged_in.id %}
+{% set liittymispyynnot = ryhma.haeLiittymispyynnot() %}
+{% if ryhma.yllapitaja.id == user_logged_in.id and liittymispyynnot|length > 0 %}
 <h3>Liittymispyynnöt</h3>
 
 <ul class="list-unstyled group-invitations-list">
+    {% for pyynto in liittymispyynnot %}
     <li>
         <div>
-            <b>Matti</b>
+            <b>{{pyynto.kayttaja.kayttajatunnus}}</b>
             <br/>
-            Saanko liittyä?
+            {{pyynto.viesti}}
             <br/>
-            <button class="btn btn-primary">Hyväksy</button>
-            <button class="btn btn-danger">Hylkää</button>
+            <form style="display: inline;" action="{{base_path}}/group/{{ryhma.id}}/accept_request" method="post">
+                <input type="hidden" name="user" value="{{pyynto.kayttaja.id}}" />
+                <input type="submit" class="btn btn-primary" value="Hyväksy" />
+            </form>
+            <form style="display: inline;" action="{{base_path}}/group/{{ryhma.id}}/decline_request" method="post">
+                <input type="hidden" name="user" value="{{pyynto.kayttaja.id}}" />
+                <input type="submit" class="btn btn-danger" value="Hyĺkää" />
+            </form>
         </div>
     </li>
-    <li>
-        <div>
-            <b>Pekka</b>
-            <br/>
-            Olis kiva kuulua tähän ryhmään
-            <br/>
-            <button class="btn btn-primary">Liity</button>
-            <button class="btn btn-danger">Hylkää</button>
-        </div>
-    </li>
+    {% endfor %}
 </ul>
 {% endif %}
 
@@ -60,18 +59,31 @@
 
 {% else %}
 <h3>Et kuulu tähän ryhmään</h3>
-{% if ryhma.suljettu %}
-<form action="{{base_path}}/group/{{ryhma.id}}/request_join" method="post">
-    <p>Ryhmä on suljettu. Kirjoita viesti ja pyydä liittyä ryhmään.</p>
-    Viesti: <textarea rows="8" cols="40"></textarea><br/>
-    <input type="submit" class="btn btn-primary" value="Pyydä liittyä"/>
-</form>
-{% else %}
-<form action="{{base_path}}/group/{{ryhma.id}}/join" method="post">
-    <p>Ryhmä on avoin, voit liittyä ryhmään.</p>
-    <input type="submit" class="btn btn-primary" value="Liity"/>
-</form>
+    {% if ryhma.suljettu %}
+        <form style="display: inline;" action="{{base_path}}/group/{{ryhma.id}}/request_join" method="post">
+        <p>Ryhmä on suljettu. Kirjoita viesti ja pyydä liittyä ryhmään.</p>
+        {% if liittymispyynto %}
+        <p><b>Olet jo pyytänyt liittyä tähän ryhmään, voit päivittää viestiäsi tai perua liittymispyynnön</b></p>
+        {% endif %}
+        Viesti: <textarea name="message" rows="8" cols="40">{{liittymispyynto.viesti}}</textarea><br/>
+        {% if liittymispyynto %}
+            <input type="submit" class="btn btn-primary" value="Päivitä liittymispyyntö"/>
+        {% else %}
+            <input type="submit" class="btn btn-primary" value="Pyydä liittyä"/>
+        {% endif %}
+        </form>
+        {% if liittymispyynto %}
+        <form style="display: inline;" action="{{base_path}}/group/{{ryhma.id}}/cancel_request_join" method="post">
+            <input type="submit" class="btn btn-danger" value="Peru liittymispyyntö"/>
+        </form>
+        {% endif %}
 
-{% endif %}
+    {% else %}
+        <form action="{{base_path}}/group/{{ryhma.id}}/join" method="post">
+            <p>Ryhmä on avoin, voit liittyä ryhmään.</p>
+            <input type="submit" class="btn btn-primary" value="Liity"/>
+        </form>
+
+    {% endif %}
 {% endif %}
 {% endblock %}
