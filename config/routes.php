@@ -68,6 +68,14 @@ $routes->post('/group/:id/cancel_request_join', function($id) {
     RyhmaController::cancel_request_join($id);
 });
 
+$routes->post('/group/:id/accept_request', function($id) {
+    RyhmaController::accept_request($id); 
+});
+
+$routes->post('/group/:id/decline_request', function($id) {
+    RyhmaController::decline_request($id);
+});
+
 $routes->get('/user', function() {
     KayttajaController::list_users();
 });

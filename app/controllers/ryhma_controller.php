@@ -178,7 +178,7 @@ class RyhmaController extends BaseController {
                 $liittymispyynto->tallenna();
                 Redirect::to('/group/' . $id, array('message' => 'Liittymispyyntö lähetetty'));
             } catch (Exception $ex) {
-                Redirect::to('/group/' . $id, array('error_messages' => array('Ryhmään liittyminen epäonnistui ('.$ex->getMessage().')')));
+                Redirect::to('/group/' . $id, array('error_messages' => array('Ryhmään liittyminen epäonnistui')));
             }
         }
     }
@@ -194,5 +194,34 @@ class RyhmaController extends BaseController {
         }
         
         Redirect::to('/group/' . $id, array('message' => 'Liittymispyyntö peruttu'));
+    }
+    
+    public static function accept_request($id) {
+        $ryhma = Ryhma::hae($id);
+        self::check_admin($ryhma->yllapitaja->id);
+        
+        $kayttaja = Kayttaja::hae($_POST['user']);
+        $liittymispyynto = Liittymispyynto::hae($ryhma, $kayttaja);
+        try {
+            $ryhma->lisaaJasen($kayttaja);
+            $liittymispyynto->poista();
+            Redirect::to('/group/' . $id, array('message' => 'Liittymispyyntö hyväksytty'));
+        } catch (Exception $ex) {
+            Redirect::to('/group/' . $id, array('error_messages' => array('Liittymispyynnön hyväksyminen epäonnistui')));
+        }
+    }
+    
+    public static function decline_request($id) {
+        $ryhma = Ryhma::hae($id);
+        self::check_admin($ryhma->yllapitaja->id);
+        
+        $kayttaja = Kayttaja::hae($_POST['user']);
+        $liittymispyynto = Liittymispyynto::hae($ryhma, $kayttaja);
+        try {
+            $liittymispyynto->poista();
+            Redirect::to('/group/' . $id, array('message' => 'Liittymispyyntö hylätty'));
+        } catch (Exception $ex) {
+            Redirect::to('/group/' . $id, array('error_messages' => array('Liittymispyynnön hylkääminen epäonnistui')));
+        }
     }
 }
