@@ -1,7 +1,6 @@
 <?php
 
 class RyhmaController extends BaseController {
-
     public static function show_group($id) {
         self::check_logged_in();
         $ryhma = Ryhma::hae($id);
@@ -222,6 +221,28 @@ class RyhmaController extends BaseController {
             Redirect::to('/group/' . $id, array('message' => 'Liittymispyyntö hylätty'));
         } catch (Exception $ex) {
             Redirect::to('/group/' . $id, array('error_messages' => array('Liittymispyynnön hylkääminen epäonnistui')));
+        }
+    }
+    
+    public static function post($id) {
+        self::check_logged_in();
+        $ryhma = Ryhma::hae($id);
+        $kayttaja = self::get_user_logged_in();
+        $teksti = $_POST['teksti'];
+        
+        if (!in_array($kayttaja, $ryhma->haeJasenet())) {
+            Redirect::to('/group/' . $id, array('error_messages' => array('Et voi julkaista tähän ryhmään, koska et kuulu siihen')));
+            return;
+        }
+        
+        try {
+            $julkaisu = new Julkaisu(array('kayttaja' => $kayttaja, 'ryhma' => $ryhma, 'teksti' => $teksti, 'aika' => date('Y-m-d H:i:s')));
+            $julkaisu->tallenna();
+            Redirect::to('/group/' . $id, array('message' => 'Julkaistu'));
+        } catch (ValidationException $ex) {
+            Redirect::to('/group/' . $id, array('error_messages' => $ex->getErrors()));
+        } catch (Exception $ex) {
+            Redirect::to('/group/' . $id, array('error_messages' => array($ex->getMessage())));
         }
     }
 }

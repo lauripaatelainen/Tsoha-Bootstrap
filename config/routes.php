@@ -32,6 +32,10 @@ $routes->get('/group/:id', function($id) {
     RyhmaController::show_group($id);
 });
 
+$routes->post('/group/:id/post', function($id) {
+    RyhmaController::post($id);
+});
+
 $routes->get('/group/:id/edit', function($id) {
     RyhmaController::edit_group($id);
 });
